@@ -1,0 +1,241 @@
+{
+  "0": [
+    "/usr/bin/gcc",
+    "Main.c",
+    "-o",
+    "Main",
+    "-fmax-errors=10",
+    "-fno-asm",
+    "-Wall",
+    "-pipe",
+    "-O2",
+    "-lm",
+    "-lgmp",
+    "--static",
+    "-std=c11",
+    "-DONLINE_JUDGE"
+  ],
+  "21": [
+    "/usr/bin/gcc",
+    "Main.c",
+    "-pipe",
+    "-o",
+    "Main",
+    "-fmax-errors=10",
+    "-fno-asm",
+    "-Wall",
+    "-O2",
+    "-lm",
+    "-lgmp",
+    "--static",
+    "-std=c99",
+    "-DONLINE_JUDGE"
+  ],
+  "1": [
+    "/usr/bin/g++",
+    "-fmax-errors=10",
+    "-fno-asm",
+    "-pipe",
+    "-Wall",
+    "-O2",
+    "-lm",
+    "-lgmp",
+    "--static",
+    "-std=c++17",
+    "-DONLINE_JUDGE",
+    "-o",
+    "Main",
+    "Main.cc"
+  ],
+  "19": [
+    "/usr/bin/g++",
+    "-fmax-errors=10",
+    "-fno-asm",
+    "-Wall",
+    "-pipe",
+    "-O2",
+    "-lm",
+    "-lgmp",
+    "--static",
+    "-std=c++11",
+    "-DONLINE_JUDGE",
+    "-o",
+    "Main",
+    "Main.cc"
+  ],
+  "20": [
+    "/usr/bin/g++",
+    "-fmax-errors=10",
+    "-fno-asm",
+    "-Wall",
+    "-pipe",
+    "-O2",
+    "-lm",
+    "-lgmp",
+    "--static",
+    "-std=c++98",
+    "-DONLINE_JUDGE",
+    "-o",
+    "Main",
+    "Main.cc"
+  ],
+  "2": [
+    "fpc",
+    "Main.pas",
+    "-Cs32000000",
+    "-Sh",
+    "-O2",
+    "-Co",
+    "-Ct",
+    "-Ci"
+  ],
+  "4": [
+    "ruby",
+    "-c",
+    "Main.rb"
+  ],
+  "5": [
+    "chmod",
+    "+rx",
+    "Main.sh"
+  ],
+  "7": [
+    "php",
+    "-l",
+    "Main.php"
+  ],
+  "8": [
+    "perl",
+    "-c",
+    "Main.pl"
+  ],
+  "9": [
+    "gmcs",
+    "-warn:0",
+    "Main.cs"
+  ],
+  "10": [
+    "gcc",
+    "-o",
+    "Main",
+    "Main.m",
+    "-fconstant-string-class=NSConstantString",
+    "-I",
+    "/usr/include/GNUstep/",
+    "-L",
+    "/usr/lib/GNUstep/Libraries/",
+    "-lobjc",
+    "-lgnustep-base"
+  ],
+  "11": [
+    "fbc",
+    "-lang",
+    "qb",
+    "Main.bas"
+  ],
+  "13": [
+    "/usr/bin/clang",
+    "Main.c",
+    "-pipe",
+    "-o",
+    "Main",
+    "-ferror-limit=10",
+    "-fno-asm",
+    "-Wall",
+    "-lm",
+    "-lgmp",
+    "--static",
+    "-std=c99",
+    "-DONLINE_JUDGE"
+  ],
+  "28": [
+    "/usr/bin/clang",
+    "Main.c",
+    "-pipe",
+    "-o",
+    "Main",
+    "-ferror-limit=10",
+    "-fno-asm",
+    "-Wall",
+    "-lm",
+    "-lgmp",
+    "--static",
+    "-std=c11",
+    "-DONLINE_JUDGE"
+  ],
+  "14": [
+    "/usr/bin/clang++",
+    "Main.cc",
+    "-pipe",
+    "-o",
+    "Main",
+    "-ferror-limit=10",
+    "-fno-asm",
+    "-Wall",
+    "-lm",
+    "-lgmp",
+    "--static",
+    "-std=c++11",
+    "-DONLINE_JUDGE"
+  ],
+  "29": [
+    "/usr/bin/clang++",
+    "Main.cc",
+    "-pipe",
+    "-o",
+    "Main",
+    "-ferror-limit=10",
+    "-fno-asm",
+    "-Wall",
+    "-lm",
+    "-lgmp",
+    "--static",
+    "-std=c++17",
+    "-DONLINE_JUDGE"
+  ],
+  "15": [
+    "luac",
+    "-o",
+    "Main",
+    "Main.lua"
+  ],
+  "17": [
+    "go",
+    "build",
+    "-o",
+    "Main",
+    "Main.go"
+  ],
+  "3": [
+    "javac",
+    "-J%s",
+    "-J%s",
+    "-encoding",
+    "UTF-8",
+    "Main.java"
+  ],
+  "23": [
+    "javac-8",
+    "-J%s",
+    "-J%s",
+    "-encoding",
+    "UTF-8",
+    "Main.java"
+  ],
+  "24": [
+    "javac-7",
+    "-J%s",
+    "-J%s",
+    "-encoding",
+    "UTF-8",
+    "Main.java"
+  ],
+  "27": [
+    "javac-6",
+    "-J%s",
+    "-J%s",
+    "-encoding",
+    "UTF-8",
+    "Main.java"
+  ]
+}
