@@ -1,0 +1,15 @@
+version: '3.2'
+
+services:
+  cupoj-judger:
+    image: "${JUDGER_VERSION}"
+    ports:
+      - 5110:5110
+    volumes:
+      - ./judge/etc:/home/judge/etc
+      - ./judge/data:/home/judge/data
+    environment:
+      ENABLE_CRONTAB: "true"
+      TZ: ${TZ}
+    restart: on-failure
+  
