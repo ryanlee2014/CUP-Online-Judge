@@ -1,8 +1,8 @@
 {
     "mysql":{
-      "host": "cupacmoj.mysql.rds.aliyuncs.com",
-      "user": "cupoj",
-      "password": "19971214aA",
+      "host": "",
+      "user": "",
+      "password": "",
       "port": "3306",
       "database": "jol",
       "connectionLimit": 20
@@ -37,6 +37,6 @@
         "host": "redis",
         "port": 6379
     },
-    "session_secret": "CUPOnlineJudgeSecretKey",
-    "salt": "thisissalt"
+    "session_secret": "",
+    "salt": ""
   }
