@@ -1,0 +1,23 @@
+{
+    "mysql": {
+      "hostname": "",
+      "username": "",
+      "password": "",
+      "db_name": "jol",
+      "port": 3306
+    },
+    "running": 8,
+    "sleep_time": 4,
+    "total": 1,
+    "mod": 0,
+    "java_time_bonus": 2,
+    "java_memory_bonus": 128,
+    "java_xms": "-Xms64M",
+    "java_xmx": "-Xmx512M",
+    "sim_enable": 1,
+    "full_diff": 1,
+    "judger_name": "DOCKER",
+    "shm_run": 0,
+    "use_max_time": 1,
+    "use_ptrace": 1
+  }

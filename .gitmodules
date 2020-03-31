@@ -1,0 +1,3 @@
+[submodule "wwwroot/html"]
+	path = wwwroot/html
+	url = https://github.com/ryanlee2014/CUP-Online-Judge-CDN.git

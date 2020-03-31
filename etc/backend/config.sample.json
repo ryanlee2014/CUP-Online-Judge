@@ -1,0 +1,42 @@
+{
+    "mysql":{
+      "host": "cupacmoj.mysql.rds.aliyuncs.com",
+      "user": "cupoj",
+      "password": "19971214aA",
+      "port": "3306",
+      "database": "jol",
+      "connectionLimit": 20
+    },
+    "monitor": {
+      "port": 3002
+    },
+    "webhook": {
+      "secret": "yoursecret"
+    },
+    "ws":{
+      "http_client_port": 3000,
+      "websocket_client_port": 3300,
+      "client_port":3000,
+      "judger_port":5100
+    },
+    "judger":{
+      "oj_home":"/home/judge",
+      "oj_judge_num":8,
+      "address": "http://cupoj-judger:5110"
+    },
+    "etc": {
+     "compile_arguments": "/home/judge/etc/compile.json"
+    },
+    "problem_upload_dest": {
+      "dir": "/home/uploads"
+    },
+    "website": {
+      "dir": "/home/website/oj"
+    },
+    "redis": {
+        "host": "redis",
+        "port": 6379
+    },
+    "session_secret": "CUPOnlineJudgeSecretKey",
+    "salt": "thisissalt"
+  }

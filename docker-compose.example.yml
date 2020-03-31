@@ -8,8 +8,60 @@ services:
     volumes:
       - ./judge/etc:/home/judge/etc
       - ./judge/data:/home/judge/data
+      - ./log/judger:/daemon/logs
+      - ./data/submission:/home/judge/submission
     environment:
       ENABLE_CRONTAB: "true"
       TZ: ${TZ}
     restart: on-failure
-  
+  cupoj-backend:
+    image: "${BACKEND_VERSION}"
+    volumes:
+      - ./etc/backend:/config
+      - ./judge:/home/judge
+      - ./log/backend:/backend/logs
+    expose:
+      - "3000"
+      - "3300"
+    environment:
+      ENABLE_CRONTAB: "true"
+      TZ: ${TZ}
+  nginx:
+    image: "${NGINX_VERSION}"
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - ./log/nginx:/var/log/nginx
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./etc/nginx/conf.d:/etc/nginx/conf.d
+      - ./etc/nginx/ssl:/etc/nginx/ssl
+      - ./wwwroot:/var/www
+    environment:
+      ENABLE_CRONTAB: "true"
+      TZ: ${TZ}
+    restart: on-failure
+  mysql:
+    image: "${MYSQL_VERSION}"
+    command: --default-authentication-plugin=mysql_native_password
+    expose:
+      - "3306"
+    volumes:
+      - ./etc/mysql/my.cnf:/etc/my.cnf
+      - ./etc/mysql/my.cnf.d:/etc/my.cnf.d
+      - ./data/mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: "%"
+      TZ: ${TZ}
+    restart: on-failure
+  redis:
+    image: "${REDIS_VERSION}"
+    expose:
+      - "6379"
+    volumes:
+      - ./data/redis/data:/data:rw
+    environment:
+      TZ: ${TZ}
+    restart: on-failure

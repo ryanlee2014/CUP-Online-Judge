@@ -1,0 +1,7 @@
+.env
+docker-compose.yml
+log/nginx/*
+judge/data/*
+log/**/*.log
+judge/etc/config.json
+etc/backend/config.json

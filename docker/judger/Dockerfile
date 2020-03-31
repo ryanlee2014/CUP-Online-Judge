@@ -14,19 +14,18 @@ RUN set -xe && \
     sed -i 's/http:\/\/archive.ubuntu.com/http:\/\/mirrors.aliyun.com/g' /etc/apt/sources.list && \
     sed -i 's/http:\/\/security.ubuntu.com/http:\/\/mirrors.aliyun.com/g' /etc/apt/sources.list && \
     apt-get update && \
+    export DEBIAN_FRONTEND=noninteractive && \
+    ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     apt-get install --yes curl && \
     curl -sL https://deb.nodesource.com/setup_13.x | bash - && \
-    apt-get install -y nodejs cmake clang fp-compiler gcc g++ libgmp-dev libmysqlclient-dev build-essential git net-tools vim && \
+    apt-get install -y nodejs cmake flex clang fp-compiler gcc g++ libgmp-dev libmysqlclient-dev build-essential git net-tools vim && \
     git clone https://github.com/CUP-ACM-Programming-Club/CUP-Online-Judge-Judger.git judger && \
     cd judger && \
-    cmake ./ && make && chmod a+x judge_client && mv ./judge_client /usr/bin && \
-    mkdir /home/judge && \
-    mkdir /home/judge/etc && \
-    mkdir /dev/shm/cupoj && \
-    mkdir /dev/shm/cupoj/submission && \
-    mkdir -p /home/judge/submission && \
-    useradd -m -u 1536 judge && \
-    chown -R judge /home/judge && \
+    mkdir -p ./sim/shell && \
+    touch ./sim/shell/build_config.sh && \
+    chmod +x ./sim/shell/build_config.sh && \
+    ./build.sh && \
+    dpkg-reconfigure --frontend noninteractive tzdata && \
     cd ../ && \
     git clone https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git daemon && \
     cd daemon && \
