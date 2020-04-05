@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 cp .env.example .env && \
 cp docker-compose.example.yml docker-compose.yml && \
 cp etc/backend/config.sample.json etc/backend/config.json && \
