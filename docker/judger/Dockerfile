@@ -30,7 +30,6 @@ RUN set -xe && \
     git clone https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git daemon && \
     cd daemon && \
     npm config set registry https://registry.npm.taobao.org && \
-    npm i -g pm2 && \
     npm install && \
     cp ../judger/wsjudged ./ && \
     chmod +x wsjudged && \
