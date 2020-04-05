@@ -22,6 +22,16 @@ services:
       - ./log/backend:/backend/logs
     expose:
       - "3000"
+    environment:
+      ENABLE_CRONTAB: "true"
+      TZ: ${TZ}
+  cupoj-backend:
+    image: "${WEBSOCKET_VERSION}"
+    volumes:
+      - ./etc/backend:/config
+      - ./judge:/home/judge
+      - ./log/backend:/backend/logs
+    expose:
       - "3300"
     environment:
       ENABLE_CRONTAB: "true"
