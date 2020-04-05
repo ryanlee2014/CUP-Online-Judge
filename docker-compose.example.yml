@@ -25,7 +25,7 @@ services:
     environment:
       ENABLE_CRONTAB: "true"
       TZ: ${TZ}
-  cupoj-backend:
+  cupoj-websocket:
     image: "${WEBSOCKET_VERSION}"
     volumes:
       - ./etc/backend:/config
