@@ -1,11 +1,9 @@
 {
-    "mysql": {
-      "hostname": "",
-      "username": "",
-      "password": "",
-      "db_name": "jol",
-      "port": 3306
-    },
+    "hostname": "",
+    "username": "",
+    "password": "",
+    "db_name": "jol",
+    "port": 3306,
     "running": 8,
     "sleep_time": 4,
     "total": 1,

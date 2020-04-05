@@ -5,3 +5,4 @@ judge/data/*
 log/**/*.log
 judge/etc/config.json
 etc/backend/config.json
+data/submission
