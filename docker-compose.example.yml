@@ -3,8 +3,8 @@ version: '3.2'
 services:
   cupoj-judger:
     image: "${JUDGER_VERSION}"
-    ports:
-      - 5110:5110
+    expose:
+      - "5110"
     volumes:
       - ./judge/etc:/home/judge/etc
       - ./judge/data:/home/judge/data
@@ -20,7 +20,6 @@ services:
       - ./etc/backend:/config
       - ./judge:/home/judge
       - ./log/backend:/backend/logs
-      - ./sql:/sql
     expose:
       - "3000"
       - "3300"
