@@ -1,5 +1,8 @@
 # ~~CUP-Online-Judge-NG-Docker-Judger~~CUPOJ
 
+## Translation
+[中文](/ryanlee2014/CUP-Online-Judge/blob/master/README.zh-cn.md)
+
 ## Requirements
 Install [Docker](https://get.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
 
@@ -40,7 +43,7 @@ cd judge/etc
 cp config.sample.json config.json
 ```
 
-4. Make `data` foler and move files into the folder or link `data` folder to `judge/data`
+5. Make `data` foler and move files into the folder or link `data` folder to `judge/data`
 ```bash
 # make dir
 mkdir -p ./judger/data
@@ -48,7 +51,7 @@ mkdir -p ./judger/data
 ln -s path/to/data ./judger/data
 ```
 
-5. Run your containers:
+6. Run your containers:
 ```bash
 docker-compose up -d
 ```
