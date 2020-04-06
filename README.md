@@ -1,9 +1,19 @@
-# CUP-Online-Judge-NG-Docker-Judger
+# ~~CUP-Online-Judge-NG-Docker-Judger~~CUPOJ
 
 ## Requirements
 Install [Docker](https://get.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Usage
+## Usage(all in one)
+```bash
+./init_env.sh
+```
+
+## Update(all in one)
+```bash
+./update.sh
+```
+
+## Usage(Manual)
 1. Clone repo inside your project
 ```bash
 git clone --recursive https://github.com/ryanlee2014/CUP-Online-Judge-NG-Docker-Judger.git docker-judger
