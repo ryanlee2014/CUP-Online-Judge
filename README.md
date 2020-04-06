@@ -1,7 +1,7 @@
 # ~~CUP-Online-Judge-NG-Docker-Judger~~CUPOJ
 
 ## Translation
-[中文](/ryanlee2014/CUP-Online-Judge/blob/master/README.zh-cn.md)
+[中文](/README.zh-cn.md)
 
 ## Requirements
 Install [Docker](https://get.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
