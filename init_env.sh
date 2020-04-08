@@ -77,19 +77,19 @@ cp docker-compose.example.yml docker-compose.yml && \
 cp etc/backend/config.sample.json etc/backend/config.json && \
 cp judge/etc/config.sample.json judge/etc/config.json && \
 docker-compose up -d && \
-echo "${BGreen}Container started. Sleep 3 seconds.${Color_off}" && \
-sleep 3 && \
-echo "${BRed}Import SQL structure... this operation will erase your data." && \
-# echo "${BYellow}Import SQL structure? this operation will erase your data![yn]" && \
+echo -e "${BGreen}Container started. Sleep 30 seconds.${Color_off}" && \
+sleep 30 && \
+echo -e "${BRed}Import SQL structure... this operation will erase your data." && \
+# echo -e "${BYellow}Import SQL structure? this operation will erase your data![yn]" && \
 docker-compose exec -T mysql mysql "-uroot" "-proot" < "./sql/structure.sql" && \
-echo "${BWhite}Imported.${Color_off}" && \
+echo -e "${BWhite}Imported. Sleep 3 seconds.${Color_off}" && \
 sleep 3 && \
 docker-compose restart && \
-echo "${BWhite}Init system complete."
-echo "Please access to server from:"
-echo "${BGreen}"
+echo -e "${BWhite}Init system complete."
+echo -e "Please access to server from:"
+echo -e "${BGreen}"
 for i in `ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
 do
-    echo "http://$i:8080"
+    echo -e "http://$i:8080"
 done
-echo "${Color_Off}";
+echo -e "${Color_Off}";
