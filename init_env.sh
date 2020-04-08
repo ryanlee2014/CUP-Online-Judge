@@ -79,12 +79,12 @@ cp docker-compose.example.yml docker-compose.yml && \
 cp etc/backend/config.sample.json etc/backend/config.json && \
 cp judge/etc/config.sample.json judge/etc/config.json && \
 docker-compose up -d mysql && \
-echo -e "${BGreen}Container started. Sleep ${IMPORT_SLEEP_TIME} seconds.${Color_off}" && \
+echo -e "${BGreen}Container started. Sleep ${IMPORT_SLEEP_TIME} seconds.${Color_Off}" && \
 sleep $IMPORT_SLEEP_TIME && \
 echo -e "${BRed}Import SQL structure... this operation will erase your data." && \
 # echo -e "${BYellow}Import SQL structure? this operation will erase your data![yn]" && \
 docker-compose exec -T mysql mysql "-uroot" "-proot" < "./sql/structure.sql" && \
-echo -e "${BWhite}Imported. Sleep 3 seconds.${Color_off}" && \
+echo -e "${BWhite}Imported. Sleep 3 seconds.${Color_Off}" && \
 sleep 3 && \
 docker-compose up -d --no-deps --build --force-recreate && \
 echo -e "${BWhite}Init system complete."
