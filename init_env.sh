@@ -76,7 +76,7 @@ cp .env.example .env && \
 cp docker-compose.example.yml docker-compose.yml && \
 cp etc/backend/config.sample.json etc/backend/config.json && \
 cp judge/etc/config.sample.json judge/etc/config.json && \
-docker-compose up -d && \
+docker-compose up -d --no-deps --build --force-recreate && \
 echo -e "${BGreen}Container started. Sleep 30 seconds.${Color_off}" && \
 sleep 30 && \
 echo -e "${BRed}Import SQL structure... this operation will erase your data." && \
