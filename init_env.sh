@@ -72,13 +72,15 @@ On_IPurple='\033[0;105m'  # Purple
 On_ICyan='\033[0;106m'    # Cyan
 On_IWhite='\033[0;107m'   # White
 
+IMPORT_SLEEP_TIME=30
+
 cp .env.example .env && \
 cp docker-compose.example.yml docker-compose.yml && \
 cp etc/backend/config.sample.json etc/backend/config.json && \
 cp judge/etc/config.sample.json judge/etc/config.json && \
 docker-compose up -d mysql && \
-echo -e "${BGreen}Container started. Sleep 30 seconds.${Color_off}" && \
-sleep 15 && \
+echo -e "${BGreen}Container started. Sleep ${IMPORT_SLEEP_TIME} seconds.${Color_off}" && \
+sleep $IMPORT_SLEEP_TIME && \
 echo -e "${BRed}Import SQL structure... this operation will erase your data." && \
 # echo -e "${BYellow}Import SQL structure? this operation will erase your data![yn]" && \
 docker-compose exec -T mysql mysql "-uroot" "-proot" < "./sql/structure.sql" && \
