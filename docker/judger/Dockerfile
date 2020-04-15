@@ -12,7 +12,7 @@ FROM ryanlee2014/cupoj-judger-env:1.0.0
 RUN set -xe && \
     git clone https://github.com/CUP-ACM-Programming-Club/CUP-Online-Judge-Judger.git judger && \
     cd judger && \
-    ./build.sh && \
+    ./build_docker.sh && \
     dpkg-reconfigure --frontend noninteractive tzdata && \
     cd ../ && \
     git clone https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git daemon && \
