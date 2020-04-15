@@ -1143,4 +1143,9 @@ CREATE USER 'cupoj'@'%' IDENTIFIED BY 'root';
 GRANT ALL ON *.* TO 'cupoj'@'%';
 flush privileges;
 
+INSERT INTO global_setting(label, value) values('contest', '0');
+INSERT INTO global_setting(label, value) values('closed', '0');
+INSERT INTO global_setting(label, value) values('email', '0');
+INSERT INTO global_setting(label, value) values('view_own_code', '1');
+INSERT INTO global_setting(label, value) values('label_color', '{}');
 -- Dump completed on 2020-04-06  5:36:47
