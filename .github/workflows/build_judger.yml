@@ -1,0 +1,40 @@
+name: Publish to docker registry
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'docker/judger/VERSION'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout code
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+      - name: Build env
+        run: |
+          echo "::set-env name=PKG_VERSION::$(cat docker/judger/VERSION)"
+      - uses: mr-smithers-excellent/docker-build-push@v2
+        name: Build judger service image
+        with:
+          image: ryanlee2014/cupoj-judger
+          tag: ${{ env.PKG_VERSION }}
+          registry: docker.io
+          dockerfile: ./docker/judger/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: mr-smithers-excellent/docker-build-push@v2
+        name: Update judger service image
+        with:
+          image: ryanlee2014/cupoj-judger
+          tag: latest
+          registry: docker.io
+          dockerfile: ./docker/judger/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
