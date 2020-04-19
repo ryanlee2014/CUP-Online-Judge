@@ -75,6 +75,7 @@ On_IWhite='\033[0;107m'   # White
 
 echo -e "${BGreen}Update git repositories${Color_Off}" && \
 git pull --rebase && \
+git submodule update --recursive && \
 echo -e "${BGreen}Update .env docker-compose.yml${Color_Off}" && \
 cp .env.example .env && \
 cp docker-compose.example.yml docker-compose.yml && \
