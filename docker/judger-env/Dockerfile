@@ -3,9 +3,6 @@ FROM ubuntu:18.04
 
 # Install Node.js
 RUN set -xe && \
-    cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
-    sed -i 's/http:\/\/archive.ubuntu.com/http:\/\/mirrors.aliyun.com/g' /etc/apt/sources.list && \
-    sed -i 's/http:\/\/security.ubuntu.com/http:\/\/mirrors.aliyun.com/g' /etc/apt/sources.list && \
     apt-get update && \
     export DEBIAN_FRONTEND=noninteractive && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
