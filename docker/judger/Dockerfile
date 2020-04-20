@@ -6,7 +6,7 @@
 #
 
 # Pull base image.
-FROM ryanlee2014/cupoj-judger-env:1.0.0
+FROM ryanlee2014/cupoj-judger-env:1.0.1
 
 # Install Node.js
 RUN set -xe && \
