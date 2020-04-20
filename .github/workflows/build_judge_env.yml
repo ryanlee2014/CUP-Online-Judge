@@ -27,7 +27,7 @@ jobs:
           image: ryanlee2014/cupoj-judger-env
           tag: ${{ env.PKG_VERSION }}
           registry: docker.io
-          dockerfile: ./docker/judger/Dockerfile
+          dockerfile: ./docker/judger-env/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - uses: mr-smithers-excellent/docker-build-push@v2
@@ -36,6 +36,6 @@ jobs:
           image: ryanlee2014/cupoj-judger-env
           tag: latest
           registry: docker.io
-          dockerfile: ./docker/judger/Dockerfile
+          dockerfile: ./docker/judger-env/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
