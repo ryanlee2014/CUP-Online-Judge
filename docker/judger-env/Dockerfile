@@ -5,7 +5,7 @@ FROM ubuntu:18.04
 RUN set -xe && \
     cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
     apt-get update && \
-    apt-get install -y wget software-properties-common && \
+    apt-get install -y wget software-properties-common sudo && \
     wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - && \
     add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ && \
     apt-get update && \
