@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'docker/judger-env/VERSION'
-      - '.github/workflows/build_judge_env.yml'
 
 jobs:
   publish:

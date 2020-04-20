@@ -20,6 +20,6 @@ RUN set -xe && \
     tar -zxvf kotlin-native-linux-1.3.72.tar.gz && \
     cd kotlin-native-linux-1.3.72/bin && \
     echo "export PATH=$(pwd):$PATH" >> /etc/profile && \
-    source /etc/profile && \
+    /bin/bash -c "source /etc/profile" && \
     cd ~
 CMD echo 'hello world!'
