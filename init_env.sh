@@ -86,7 +86,15 @@ echo -e "${BRed}Import SQL structure... this operation will erase your data." &&
 docker-compose exec -T mysql mysql "-uroot" "-proot" < "./sql/structure.sql" && \
 echo -e "${BWhite}Imported. Sleep 3 seconds.${Color_Off}" && \
 sleep 3 && \
+echo -e "${BGreen}Recreate container and start all services." && \
 docker-compose up -d --no-deps --build --force-recreate && \
+docker-compose stop && \
+docker-compose start mysql && \
+docker-compose start redis && \
+docker-compose start cupoj-backend && \
+docker-compose start cupoj-judger && \
+docker-compose start cupoj-websocket && \
+docker-compose start nginx && \
 echo -e "${BWhite}Init system complete."
 echo -e "Please access to server from:"
 echo -e "${BGreen}"

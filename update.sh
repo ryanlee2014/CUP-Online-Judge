@@ -89,7 +89,7 @@ docker-compose start cupoj-backend && \
 docker-compose start cupoj-judger && \
 docker-compose start cupoj-websocket && \
 docker-compose start nginx && \
-echo -e "${BGreen}Container has been started.${Color_Off}";
+echo -e "${BGreen}Containers have been started.${Color_Off}";
 echo -e "Please access to server from:"
 echo -e "${BGreen}"
 for i in `ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
