@@ -20,12 +20,7 @@ RUN set -xe && \
     tar -zxvf kotlin-native-linux-1.3.72.tar.gz && \
     mv kotlin-native-linux-1.3.72 /usr/lib/kotlin && \
     rm -rf kotlin-native-linux-1.3.72.tar.gz && \
-    cd ~ && \
-    chsh -s $(which zsh) && \
-    git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k && \
-    sed -i s/ZSH_THEME="robbyrussell"/"powerlevel9k/powerlevel9k"/g ~/.zshrc && \
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git && \
-    echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+    cd ~
 
 ENV PATH="/usr/lib/kotlin/bin:${PATH}"
 
