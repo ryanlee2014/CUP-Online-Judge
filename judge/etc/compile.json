@@ -184,6 +184,13 @@
     "-std=c99",
     "-DONLINE_JUDGE"
   ],
+  "22": [
+    "kotlinc",
+    "Main.kt",
+    "-o",
+    "Main",
+    "-opt"
+  ],
   "23": [
     "javac",
     "-source",

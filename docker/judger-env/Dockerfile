@@ -18,10 +18,15 @@ RUN set -xe && \
     cd ~ && \
     wget https://github.com/JetBrains/kotlin/releases/download/v1.3.72/kotlin-native-linux-1.3.72.tar.gz && \
     tar -zxvf kotlin-native-linux-1.3.72.tar.gz && \
-    mv kotlin-native-linux-1.3.72 /usr/lib/kotlin && \
+    mv kotlin-native-linux-1.3.72 /usr/lib/kotlin-native && \
     rm -rf kotlin-native-linux-1.3.72.tar.gz && \
+    cd ~ && \
+    wget https://github.com/JetBrains/kotlin/releases/download/v1.3.72/kotlin-compiler-1.3.72.zip && \
+    unzip kotlin-compiler-1.3.72.zip && \
+    mv kotlinc /usr/lib/kotlinc && \
+    rm -rf kotlin-compiler-1.3.72.zip && \
     cd ~
 
-ENV PATH="/usr/lib/kotlin/bin:${PATH}"
+ENV PATH="/usr/lib/kotlinc/bin:/usr/lib/kotlin-native/bin:${PATH}"
 
 CMD echo 'hello world!'
