@@ -3,6 +3,8 @@ FROM ryanlee2014/cupoj-judger-env:1.0.3
 
 # Install Node.js
 RUN set -xe && \
+    useradd -m -u 1536 judge && \
+    mkdir /home/judge && \
     cd ~ && \
     echo 'fun main(args: Array<String>) {println("Hello, World!")}' > hello.kt && \
     /usr/lib/kotlin-native/bin/kotlinc hello.kt -o hello -opt && \
