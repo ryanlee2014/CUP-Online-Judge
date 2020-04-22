@@ -18,13 +18,14 @@ jobs:
       - name: Build env
         run: |
           echo "::set-env name=PKG_VERSION::$(cat docker/judger-env/VERSION)"
+          echo "::set-env name=PKG_FULL_VERSION::$(cat docker/judger-env/VERSION)-full"
       - uses: mr-smithers-excellent/docker-build-push@v2
         name: Build judger environment image
         with:
           image: ryanlee2014/cupoj-judger-env
           tag: ${{ env.PKG_VERSION }}
           registry: docker.io
-          dockerfile: ./docker/judger-env/Dockerfile
+          dockerfile: ./docker/judger-env/base/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - uses: mr-smithers-excellent/docker-build-push@v2
@@ -33,6 +34,15 @@ jobs:
           image: ryanlee2014/cupoj-judger-env
           tag: latest
           registry: docker.io
-          dockerfile: ./docker/judger-env/Dockerfile
+          dockerfile: ./docker/judger-env/base/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: mr-smithers-excellent/docker-build-push@v2
+        name: Build judger environment image
+        with:
+          image: ryanlee2014/cupoj-judger-env
+          tag: ${{ env.PKG_FULL_VERSION }}
+          registry: docker.io
+          dockerfile: ./docker/judger-env/full/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
