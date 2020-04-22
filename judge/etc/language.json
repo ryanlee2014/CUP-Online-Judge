@@ -29,5 +29,6 @@
   "27": "java6",
   "28": "clang11",
   "29": "clangpp17",
-  "30": "cpp20"
+  "30": "cpp20",
+  "31": "kotlinnative"
 }
