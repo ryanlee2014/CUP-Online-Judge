@@ -26,8 +26,11 @@ RUN set -xe && \
     mv kotlinc /usr/lib/kotlinc && \
     rm -rf kotlin-compiler-1.3.72.zip && \
     cd ~ && \
-    echo 'fun main(args: Array<String>) {println("Hello, World!")}' > hello.jar && \
+    echo 'fun main(args: Array<String>) {println("Hello, World!")}' > hello.kt && \
     /usr/lib/kotlin-native/bin/kotlinc hello.kt -o hello -opt && \
+    mv ~/.konan /home/judge/.konan && \
+    chgrp -R judge /home/judge/.konan && \
+    chown -R judge /home/judge/.konan && \
     cd ~
 
 ENV PATH="/usr/lib/kotlinc/bin:/usr/lib/kotlin-native/bin:${PATH}"
