@@ -187,9 +187,9 @@
   "22": [
     "kotlinc",
     "Main.kt",
-    "-o",
-    "Main",
-    "-opt"
+    "-include-runtime",
+    "-d",
+    "Main.jar"
   ],
   "23": [
     "javac",
@@ -266,5 +266,12 @@
     "-o",
     "Main",
     "Main.cc"
+  ],
+  "31": [
+    "kotlinc",
+    "Main.kt",
+    "-o",
+    "Main",
+    "-opt"
   ]
 }
