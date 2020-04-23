@@ -41,7 +41,7 @@ jobs:
         name: Update judger service image with full env
         with:
           image: ryanlee2014/cupoj-judger
-          tag: ${{ PKG_FULL_VERSION }}
+          tag: ${{ env.PKG_FULL_VERSION }}
           registry: docker.io
           dockerfile: ./docker/judger/full/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
