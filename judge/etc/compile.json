@@ -268,7 +268,7 @@
     "Main.cc"
   ],
   "31": [
-    "kotlinc",
+    "/usr/lib/kotlin-native/bin/kotlinc",
     "Main.kt",
     "-o",
     "Main",
