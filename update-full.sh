@@ -6,7 +6,7 @@ echo -e "${BGreen}Update git repositories${Color_Off}" && \
 git pull --rebase && \
 git submodule update --recursive && \
 echo -e "${BGreen}Update .env docker-compose.yml${Color_Off}" && \
-bash shell/base-env.sh && \
+bash shell/full-env.sh && \
 bash shell/recreate-container.sh && \
 echo -e "Please access to server from:"
 echo -e "${BGreen}"
