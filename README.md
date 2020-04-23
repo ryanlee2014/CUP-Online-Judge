@@ -23,7 +23,7 @@ Install [Docker](https://get.docker.com/) and [Docker Compose](https://docs.dock
 
 ## Usage(all in one)
 ```bash
-./init_env.sh
+./init-env.sh
 ```
 
 ## Update(all in one)
