@@ -252,7 +252,7 @@
     "-DONLINE_JUDGE"
   ],
   "30": [
-    "/usr/local/bin/g++",
+    "g++-10",
     "-fmax-errors=10",
     "-fno-asm",
     "-pipe",
