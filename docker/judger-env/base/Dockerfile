@@ -17,7 +17,7 @@ RUN set -xe && \
     apt-get install -y fp-compiler mono-devel adoptopenjdk-14-hotspot && \
     add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
     apt-get update && \
-    apt-get install gcc-10 g++-10 && \
+    apt-get install -y gcc-10 g++-10 && \
     cd ~ && \
     wget https://github.com/JetBrains/kotlin/releases/download/v1.3.72/kotlin-native-linux-1.3.72.tar.gz && \
     tar -zxvf kotlin-native-linux-1.3.72.tar.gz && \
