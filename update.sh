@@ -1,6 +1,6 @@
 #!/bin/bash
 BASEDIR=$(dirname "$0")
-source $BASEDIR/color-shell.sh
+source shell/color-shell.sh
 
 echo -e "${BGreen}Update git repositories${Color_Off}" && \
 git pull --rebase && \
