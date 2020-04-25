@@ -3,6 +3,7 @@ version: '3.2'
 services:
   cupoj-judger:
     image: "${JUDGER_VERSION}"
+    privileged: true
     expose:
       - "5110"
     volumes:
