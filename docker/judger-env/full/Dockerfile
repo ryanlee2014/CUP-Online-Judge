@@ -1,5 +1,5 @@
 # Pull base image.
-FROM ryanlee2014/cupoj-judger-env:1.0.3
+FROM ryanlee2014/cupoj-judger-env:1.1.0
 
 # Install Node.js
 RUN set -xe && \
@@ -16,7 +16,5 @@ RUN set -xe && \
     chgrp -R judge /home/judge/.konan && \
     chown -R judge /home/judge/.konan && \
     cd ~
-
-ENV PATH="/usr/lib/kotlinc/bin:/usr/lib/kotlin-native/bin:${PATH}"
 
 CMD echo 'hello world!'
