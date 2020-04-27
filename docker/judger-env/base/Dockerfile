@@ -1,5 +1,5 @@
 # Pull base image.
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # Install Node.js
 RUN set -xe && \
