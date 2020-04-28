@@ -1,6 +1,6 @@
 {
   "0": [
-    "/usr/bin/gcc",
+    "gcc",
     "Main.c",
     "-o",
     "Main",
@@ -16,7 +16,7 @@
     "-DONLINE_JUDGE"
   ],
   "1": [
-    "/usr/bin/g++",
+    "g++",
     "-fmax-errors=10",
     "-fno-asm",
     "-pipe",
@@ -137,7 +137,7 @@
     "Main.go"
   ],
   "19": [
-    "/usr/bin/g++",
+    "g++",
     "-fmax-errors=10",
     "-fno-asm",
     "-Wall",
@@ -153,7 +153,7 @@
     "Main.cc"
   ],
   "20": [
-    "/usr/bin/g++",
+    "g++",
     "-fmax-errors=10",
     "-fno-asm",
     "-Wall",
@@ -169,7 +169,7 @@
     "Main.cc"
   ],
   "21": [
-    "/usr/bin/gcc",
+    "gcc",
     "Main.c",
     "-pipe",
     "-o",
@@ -222,7 +222,7 @@
     "Main.java"
   ],
   "28": [
-    "/usr/bin/clang",
+    "clang",
     "Main.c",
     "-pipe",
     "-o",
@@ -237,7 +237,7 @@
     "-DONLINE_JUDGE"
   ],
   "29": [
-    "/usr/bin/clang++",
+    "clang++",
     "Main.cc",
     "-pipe",
     "-o",
