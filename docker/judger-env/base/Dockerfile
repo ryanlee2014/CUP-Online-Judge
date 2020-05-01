@@ -1,6 +1,8 @@
 # Pull base image.
 FROM ubuntu:20.04
 
+LABEL maintainer="Ryan Lee" \
+      email="gxlhybh@gmail.com"
 # Install Node.js
 RUN set -xe && \
     cp /etc/apt/sources.list /etc/apt/sources.list.bak && \

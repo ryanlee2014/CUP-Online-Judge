@@ -1,6 +1,7 @@
 # Pull base image.
-FROM ryanlee2014/cupoj-judger-env:1.2.0
-
+FROM ryanlee2014/cupoj-judger-env:1.2.1
+LABEL maintainer="Ryan Lee" \
+      email="gxlhybh@gmail.com"
 # Install Node.js
 RUN set -xe && \
     useradd -m -u 1536 judge && \
