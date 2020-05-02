@@ -21,6 +21,8 @@
 ## Requirements
 Install [Docker](https://get.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
 
+[Manual](/docs/INSTALL_DOCKER.md)
+
 ## Usage(all in one)
 ```bash
 ./init-env.sh

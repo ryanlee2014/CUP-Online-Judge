@@ -18,6 +18,8 @@
 ## 运行要求
 安装 [Docker](https://get.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
 
+[安装手册](/docs/INSTALL_DOCKER.zh-cn.md)
+
 ## 使用方法(整合脚本)
 ```bash
 ./init-env.sh
