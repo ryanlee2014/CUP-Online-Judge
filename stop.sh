@@ -1,7 +1,7 @@
 #!/bin/bash
 BASEDIR=$(dirname "$0")
 
-source $BASEDIR/color-shell.sh
+source $BASEDIR/shell/color-shell.sh
 
 echo -e "${BGreen}Stop all containers.${Color_Off}" && \
 docker-compose stop && \
