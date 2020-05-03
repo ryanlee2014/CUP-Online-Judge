@@ -11,7 +11,6 @@ docker-compose up -d mysql && \
 echo -e "${BGreen}Container started. Sleep ${IMPORT_SLEEP_TIME} seconds.${Color_Off}" && \
 sleep $IMPORT_SLEEP_TIME && \
 echo -e "${BRed}Import SQL structure... this operation will erase your data." && \
-# echo -e "${BYellow}Import SQL structure? this operation will erase your data![yn]" && \
 docker-compose exec -T mysql mysql "-uroot" "-proot" < "./sql/structure.sql" && \
 echo -e "${BWhite}Imported. Sleep 3 seconds.${Color_Off}" && \
 sleep 3 && \
