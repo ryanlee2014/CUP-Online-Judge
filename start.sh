@@ -1,12 +1,12 @@
 #!/bin/bash
 BASEDIR=$(dirname "$0")
-source $BASEDIR/shell/color-shell.sh
+source "$BASEDIR"/shell/color-shell.sh
 
 if [[ "$#" != 0 ]]; then
     for var in "$@"
     do
         echo -e "${BGreen}Starting $var${Color_Off}"
-        docker-compose start $var && \
+        docker-compose start "$var" && \
         echo -e "${BGreen}$var has been started.${Color_Off}" || \
         echo -e "${BRed}Failed to start $var${Color_Off}";
     done

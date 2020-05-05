@@ -1,6 +1,6 @@
 #!/bin/bash
 BASEDIR=$(dirname "$0")
-source $BASEDIR/shell/color-shell.sh
+source "$BASEDIR"/shell/color-shell.sh
 
 IMPORT_SLEEP_TIME=30
 
@@ -19,7 +19,7 @@ bash shell/recreate-container.sh && \
 echo -e "${BWhite}Init system complete."
 echo -e "Please access to server from:"
 echo -e "${BGreen}"
-for i in `ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
+for i in $(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 do
     echo -e "http://$i:8080"
 done
