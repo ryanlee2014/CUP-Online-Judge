@@ -33,7 +33,7 @@ Install [Docker](https://get.docker.com/) and [Docker Compose](https://docs.dock
 ./update.sh
 ```
 
-## Usage(Manual)
+## Usage(Manual Installation Guide)
 1. Clone repo inside your project
 ```bash
 git clone --recursive https://github.com/ryanlee2014/CUP-Online-Judge-NG-Docker-Judger.git docker-judger
