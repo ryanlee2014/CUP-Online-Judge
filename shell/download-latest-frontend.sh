@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASEDIR=$(dirname "$0")
+BASEDIR=`pwd`
 
 LATEST_VERSION=$(curl "https://api.github.com/repos/ryanlee2014/CUP-Online-Judge-CDN/tags" | grep '"name":' | sed -E 's/.*"([^"]+)".*/\1/' | head -n 1)
 
