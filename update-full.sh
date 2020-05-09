@@ -4,7 +4,7 @@ source "$BASEDIR"/shell/color-shell.sh
 
 echo -e "${BGreen}Update git repositories${Color_Off}" && \
 git pull --rebase && \
-git submodule update --recursive && \
+bash shell/download-latest-frontend.sh && \
 echo -e "${BGreen}Update .env docker-compose.yml${Color_Off}" && \
 bash shell/full-env.sh && \
 bash shell/recreate-container.sh && \

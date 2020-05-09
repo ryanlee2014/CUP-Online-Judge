@@ -7,6 +7,7 @@ IMPORT_SLEEP_TIME=30
 bash shell/full-env.sh && \
 cp etc/backend/config.sample.json etc/backend/config.json && \
 cp judge/etc/config.sample.json judge/etc/config.json && \
+bash shell/download-latest-frontend.sh && \
 docker-compose up -d mysql && \
 echo -e "${BGreen}Container started. Sleep ${IMPORT_SLEEP_TIME} seconds.${Color_Off}" && \
 sleep $IMPORT_SLEEP_TIME && \
