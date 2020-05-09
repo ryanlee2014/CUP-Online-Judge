@@ -18,6 +18,8 @@ cd ./$UNZIP_DIR_NAME
 
 rm -rf "$BASEDIR/wwwroot/html/*"
 
+mkdir -p "$BASEDIR/wwwroot/html"
+
 cp -r * "$BASEDIR/wwwroot/html"
 
 cd "$BASEDIR"
