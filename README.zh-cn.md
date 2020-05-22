@@ -69,3 +69,6 @@ ln -s path/to/data ./judger/data
 ```bash
 docker-compose up -d
 ```
+
+## 支持 CUP Online Judge
+[在爱发电成为赞助商](https://afdian.net/@ryanlee)(仅支持支付宝)

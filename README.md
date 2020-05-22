@@ -72,3 +72,6 @@ ln -s path/to/data ./judger/data
 ```bash
 docker-compose up -d
 ```
+
+## Supporting CUP Online Judge
+[Become a sponsor on afdian](https://afdian.net/@ryanlee) (Alipay only)
