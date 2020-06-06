@@ -37,6 +37,13 @@ services:
     environment:
       ENABLE_CRONTAB: "true"
       TZ: ${TZ}
+  cupoj-language-server:
+    image: "${LANGUAGE_SERVER_VERSION}"
+    expose:
+      - "17779"
+    environment: 
+      ENABLE_CRONTAB: "true"
+      TZ: ${TZ}
   nginx:
     image: "${NGINX_VERSION}"
     ports:
