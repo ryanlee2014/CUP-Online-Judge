@@ -27,7 +27,8 @@ RUN set -xe && \
     git clone https://github.com/wylieconlon/jsonrpc-ws-proxy.git wsproxy && \
     cd wsproxy && \
     npm i && \
-    npm run build
+    npm run build && \
+    rm -rf /ccls
 
 # Binds to port 8080
 EXPOSE  17779
