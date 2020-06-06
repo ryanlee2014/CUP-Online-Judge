@@ -22,7 +22,7 @@ RUN set -xe && \
     tar xf clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz && \
     cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$PWD/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04 && \
     cmake --build Release && \
-    cmake --build Release --target install & \
+    cmake --build Release --target install && \
     cd / && \
     git clone https://github.com/wylieconlon/jsonrpc-ws-proxy.git wsproxy && \
     cd wsproxy && \
