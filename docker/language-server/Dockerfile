@@ -15,7 +15,7 @@ LABEL maintainer="Ryan Lee" \
 
 # Install Node.js
 RUN set -xe && \
-    apt install libncurses5 && \
+    apt install -y libncurses5 && \
     git clone --depth=1 --recursive https://github.com/MaskRay/ccls.git ccls && \
     cd ccls && \
     wget -c https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz && \
