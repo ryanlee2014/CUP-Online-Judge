@@ -18,7 +18,7 @@ RUN set -xe && \
     apt install -y libncurses5 && \
     git clone --depth=1 --recursive https://github.com/MaskRay/ccls.git ccls && \
     cd ccls && \
-    wget -c https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz && \
+    wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz && \
     tar xf clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz && \
     cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$PWD/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04 && \
     cmake --build Release && \
