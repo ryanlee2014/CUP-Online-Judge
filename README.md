@@ -14,7 +14,7 @@
 |[ryanlee2014/cupoj-frontend](https://github.com/ryanlee2014/CUP-Online-Judge-Frontend)|![GitHub commit activity](https://img.shields.io/github/commit-activity/w/ryanlee2014/CUP-Online-Judge-Frontend)|||![GitHub repo size](https://img.shields.io/github/repo-size/ryanlee2014/CUP-Online-Judge-CDN)|
 |[metowolf/nginx](https://hub.docker.com/r/metowolf/nginx)|![Pulls Count](https://img.shields.io/docker/pulls/metowolf/nginx.svg)|![GitHub release (latest by date)](https://img.shields.io/github/v/tag/metowolf/docker-nginx)|![](https://shields.beevelop.com/docker/image/layers/metowolf/nginx/latest.svg)|![](https://shields.beevelop.com/docker/image/image-size/metowolf/nginx/latest.svg)|
 |[mysql/mysql-server](https://hub.docker.com/r/mysql/mysql-server)|![Pulls Count](https://img.shields.io/docker/pulls/mysql/mysql-server.svg)||![](https://shields.beevelop.com/docker/image/layers/mysql/mysql-server/latest.svg)|![](https://shields.beevelop.com/docker/image/image-size/mysql/mysql-server/latest.svg)|
-|[metowolf/redis](https://hub.docker.com/r/metowolf/redis)|![Pulls Count](https://img.shields.io/docker/pulls/metowolf/redis.svg)|![GitHub release (latest by date)](https://img.shields.io/github/v/tag/metowolf/docker-redis)|![](https://shields.beevelop.com/docker/image/layers/metowolf/redis/latest.svg)|![](https://shields.beevelop.com/docker/image/image-size/metowolf/redis/latest.svg)|
+|[library/redis](https://hub.docker.com/_/redis)|![Pulls Count](https://img.shields.io/docker/pulls/library/redis.svg)||![](https://shields.beevelop.com/docker/image/layers/library/redis/alpine.svg)|![](https://shields.beevelop.com/docker/image/image-size/library/redis/alpine.svg)|
 
 ## Translation
 [中文](/README.zh-cn.md)
