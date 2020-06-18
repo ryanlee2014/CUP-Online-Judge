@@ -1,4 +1,0 @@
-langservers:
-    cpp:
-            - ccls
-            - "--init={\"cacheDirectory\":\"/path/to/cachedir\",\"cacheFormat\":\"json\",\"index\":{\"onChange\":true,\"trackDependency\":2}}"
