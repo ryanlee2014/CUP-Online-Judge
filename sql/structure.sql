@@ -230,9 +230,31 @@ CREATE TABLE `contest` (
   `ip_policy` char(40) DEFAULT NULL,
   `limit_hostname` varchar(40) DEFAULT NULL,
   `maker` varchar(255) DEFAULT '',
+  `show_all_ranklist` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`contest_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `contest_assistant`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+create table `contest_assistant`
+(
+    `contest_id`   int         not null,
+    `assistant_id` int auto_increment,
+    `user_id`      varchar(60) not null,
+    PRIMARY KEY (`assistant_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+create index contest_assistant_contest_id_index
+    on contest_assistant (contest_id);
+
+create index contest_assistant_user_id_index
+    on contest_assistant (user_id);
 
 --
 -- Table structure for table `contest_cheat`
