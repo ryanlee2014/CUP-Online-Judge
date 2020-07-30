@@ -11,6 +11,7 @@ services:
       - ./judge/data:/home/judge/data
       - ./log/judger:/daemon/logs
       - ./data/submission:/home/judge/submission
+      - ./judge/config:/daemon/config
     environment:
       ENABLE_CRONTAB: "true"
       TZ: ${TZ}
@@ -41,7 +42,7 @@ services:
     image: "${LANGUAGE_SERVER_VERSION}"
     expose:
       - "17779"
-    environment: 
+    environment:
       ENABLE_CRONTAB: "true"
       TZ: ${TZ}
   nginx:
