@@ -15,7 +15,7 @@ RUN set -xe && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     apt-get install --yes curl && \
     curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
-    apt-get install -y nodejs cmake flex clang fp-compiler  gcc g++ unzip zsh libgmp-dev libmysqlclient-dev build-essential git net-tools vim && \
+    apt-get install -y nodejs cmake flex clang fp-compiler gcc g++ unzip zsh libgmp-dev libmysqlclient-dev build-essential git net-tools vim && \
     apt-get install -y fp-compiler mono-devel adoptopenjdk-14-hotspot && \
     add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
     apt-get update && \
