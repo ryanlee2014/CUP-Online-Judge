@@ -881,17 +881,15 @@ CREATE TABLE `switch_log` (
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `topic` (
-  `tid` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varbinary(60) NOT NULL,
-  `status` int(2) NOT NULL DEFAULT '0',
-  `top_level` int(2) NOT NULL DEFAULT '0',
-  `cid` int(11) DEFAULT NULL,
-  `pid` int(11) NOT NULL,
-  `author_id` varchar(48) NOT NULL,
-  PRIMARY KEY (`tid`),
-  KEY `cid` (`cid`,`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `topic_assistant` (
+  `topic_id` int(11) NOT NULL,
+  `topic_assistant_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(64) NOT NULL,
+  PRIMARY KEY (`topic_assistant_id`),
+  KEY `topic_assistant_topic_id_index` (`topic_id`),
+  KEY `topic_assistant_topic_id_user_id_index` (`topic_id`,`user_id`),
+  KEY `topic_assistant_user_id_index` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1976 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
