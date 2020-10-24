@@ -8,7 +8,7 @@ mkdir /tmp/cupoj-frontend
 
 cd /tmp/cupoj-frontend
 
-wget "https://shrill-pond-3e81.hunsh.workers.dev/https:/github.com/ryanlee2014/CUP-Online-Judge-CDN/archive/$LATEST_VERSION"
+wget "https://shrill-pond-3e81.hunsh.workers.dev/https:/github.com/ryanlee2014/CUP-Online-Judge-CDN/archive/$LATEST_VERSION.zip"
 
 unzip "$LATEST_VERSION"
 
