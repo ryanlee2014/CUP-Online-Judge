@@ -4,10 +4,22 @@ source "$BASEDIR"/shell/color-shell.sh
 
 IMPORT_SLEEP_TIME=30
 
+REGION="$1"
+
+FRONTEND_MIRROR=""
+
+if [[ "$REGION" != "" ]]; then
+  FRONTEND_MIRROR=".$REGION"
+fi
+
+FRONTEND_SHELL="shell/download-latest-frontend$FRONTEND_MIRROR.sh"
+
+chmod +x $FRONTEND_SHELL
+
 bash shell/base-env.sh && \
 cp etc/backend/config.sample.json etc/backend/config.json && \
 cp judge/etc/config.sample.json judge/etc/config.json && \
-bash shell/download-latest-frontend.sh && \
+bash $FRONTEND_SHELL && \
 docker-compose up -d mysql && \
 echo -e "${BGreen}Container started. Sleep ${IMPORT_SLEEP_TIME} seconds.${Color_Off}" && \
 sleep $IMPORT_SLEEP_TIME && \
