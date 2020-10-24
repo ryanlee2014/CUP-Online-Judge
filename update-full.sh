@@ -2,9 +2,21 @@
 BASEDIR=$(dirname "$0")
 source "$BASEDIR"/shell/color-shell.sh
 
+REGION="$1"
+
+FRONTEND_MIRROR=""
+
+if [[ "$REGION" != "" ]]; then
+  FRONTEND_MIRROR=".$REGION"
+fi
+
+FRONTEND_SHELL="shell/download-latest-frontend$FRONTEND_MIRROR.sh"
+
+chmod +x $FRONTEND_SHELL
+
 echo -e "${BGreen}Update git repositories${Color_Off}" && \
 git pull --rebase && \
-bash shell/download-latest-frontend.sh && \
+bash $FRONTEND_SHELL && \
 echo -e "${BGreen}Update .env docker-compose.yml${Color_Off}" && \
 bash shell/full-env.sh && \
 bash shell/recreate-container.sh && \
