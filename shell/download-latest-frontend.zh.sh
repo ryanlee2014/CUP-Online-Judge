@@ -12,7 +12,7 @@ wget "https://shrill-pond-3e81.hunsh.workers.dev/https:/github.com/ryanlee2014/C
 
 unzip "$LATEST_VERSION"
 
-mv "./CUP-Online-Judge-CDN-${LATEST_VERSION:1}/*" "./"
+mv ./CUP-Online-Judge-CDN-${LATEST_VERSION:1}/* ./
 
 UNZIP_DIR_NAME=$(ls | grep ryan)
 
