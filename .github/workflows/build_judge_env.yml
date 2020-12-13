@@ -17,8 +17,8 @@ jobs:
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
       - name: Build env
         run: |
-          echo "PKG_VERSION=$(cat docker/judger-env/VERSION) >> $GITHUB_ENV"
-          echo "PKG_FULL_VERSION=$(cat docker/judger-env/VERSION)-full >> $GITHUB_ENV"
+          echo "PKG_VERSION=$(cat docker/judger-env/VERSION)" >> $GITHUB_ENV
+          echo "PKG_FULL_VERSION=$(cat docker/judger-env/VERSION)-full" >> $GITHUB_ENV
       - uses: mr-smithers-excellent/docker-build-push@v2
         name: Build judger environment image
         with:
