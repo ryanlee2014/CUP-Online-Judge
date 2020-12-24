@@ -27,6 +27,7 @@ services:
     environment:
       ENABLE_CRONTAB: "true"
       TZ: ${TZ}
+    restart: on-failure
   cupoj-websocket:
     image: "${WEBSOCKET_VERSION}"
     volumes:
@@ -38,6 +39,7 @@ services:
     environment:
       ENABLE_CRONTAB: "true"
       TZ: ${TZ}
+    restart: on-failure
   cupoj-language-server:
     image: "${LANGUAGE_SERVER_VERSION}"
     expose:
