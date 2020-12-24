@@ -4,13 +4,21 @@ source "$BASEDIR"/shell/color-shell.sh
 
 REGION="$1"
 
+LOCAL_FRONTEND="$2"
+
 FRONTEND_MIRROR=""
+
+LOCAL_FRONTEND_MIRROR=""
 
 if [[ "$REGION" != "" ]]; then
   FRONTEND_MIRROR=".$REGION"
 fi
 
-FRONTEND_SHELL="shell/download-latest-frontend$FRONTEND_MIRROR.sh"
+if [[ "$LOCAL_FRONTEND" != "" ]]; then
+  LOCAL_FRONTEND_MIRROR=".local"
+fi
+
+FRONTEND_SHELL="shell/download-latest-frontend$FRONTEND_MIRROR$LOCAL_FRONTEND_MIRROR.sh"
 
 chmod +x $FRONTEND_SHELL
 

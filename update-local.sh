@@ -4,18 +4,12 @@ source "$BASEDIR"/shell/color-shell.sh
 
 REGION="$1"
 
-LOCAL_FRONTEND="$2"
-
 FRONTEND_MIRROR=""
 
-LOCAL_FRONTEND_MIRROR=""
+LOCAL_FRONTEND_MIRROR=".local"
 
 if [[ "$REGION" != "" ]]; then
   FRONTEND_MIRROR=".$REGION"
-fi
-
-if [[ "$LOCAL_FRONTEND" != "" ]]; then
-  LOCAL_FRONTEND_MIRROR=".local"
 fi
 
 FRONTEND_SHELL="shell/download-latest-frontend$FRONTEND_MIRROR$LOCAL_FRONTEND_MIRROR.sh"
@@ -26,7 +20,7 @@ echo -e "${BGreen}Update git repositories${Color_Off}" && \
 git pull --rebase && \
 bash $FRONTEND_SHELL && \
 echo -e "${BGreen}Update .env docker-compose.yml${Color_Off}" && \
-bash shell/full-env.sh && \
+bash shell/base-env.sh && \
 bash shell/recreate-container.sh && \
 bash restart.sh && \
 echo -e "Please access to server from:"
