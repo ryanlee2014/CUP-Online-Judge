@@ -22,6 +22,7 @@ services:
       - ./etc/backend:/config
       - ./judge:/home/judge
       - ./log/backend:/backend/logs
+      - ./data/backend:/backend/data
     expose:
       - "3000"
     environment:
