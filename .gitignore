@@ -1,4 +1,7 @@
 .env
+*.log
+judge/*.csv
+judge/*.py
 docker-compose.yml
 log/nginx/*
 judge/data/*
