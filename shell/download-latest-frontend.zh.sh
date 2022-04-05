@@ -4,6 +4,8 @@ BASEDIR=`pwd`
 
 LATEST_VERSION=$(curl "https://api.github.com/repos/ryanlee2014/CUP-Online-Judge-CDN/tags" | grep '"name":' | sed -E 's/.*"([^"]+)".*/\1/' | head -n 1)
 
+rm -rf /tmp/cupoj-frontend
+
 mkdir /tmp/cupoj-frontend
 
 cd /tmp/cupoj-frontend
