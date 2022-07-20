@@ -8,15 +8,13 @@ RUN set -xe && \
     cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
     apt-get update && \
     apt-get install -y wget software-properties-common sudo && \
-    wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - && \
-    add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ && \
     apt-get update && \
     export DEBIAN_FRONTEND=noninteractive && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     apt-get install --yes curl && \
     curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
     apt-get install -y nodejs cmake flex clang fp-compiler gcc g++ unzip zsh libgmp-dev libmysqlclient-dev build-essential git net-tools vim && \
-    apt-get install -y fp-compiler mono-devel adoptopenjdk-14-hotspot && \
+    apt-get install -y fp-compiler mono-devel openjdk-11-jdk && \
     add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
     apt-get update && \
     apt-get install -y gcc-10 g++-10 && \
