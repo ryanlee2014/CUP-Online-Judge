@@ -4,6 +4,7 @@ LABEL maintainer="Ryan Lee" \
       email="gxlhybh@gmail.com"
 # Install Node.js
 RUN set -xe && \
+    apt-get install -y libncurses5 && \
     useradd -m -u 1536 judge && \
     cd ~ && \
     wget https://github.com/JetBrains/kotlin/releases/download/v1.3.72/kotlin-compiler-1.3.72.zip && \
