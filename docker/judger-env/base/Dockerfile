@@ -23,6 +23,8 @@ RUN set -xe && \
     tar -zxvf kotlin-native-linux-1.3.72.tar.gz && \
     mv kotlin-native-linux-1.3.72 /usr/lib/kotlin-native && \
     rm -rf kotlin-native-linux-1.3.72.tar.gz && \
+    dirname $(find / -name libjli.so) > /etc/ld.so.conf.d/libjvm.conf && \
+    ldconfig && \
     cd ~
 
 ENV PATH="/usr/lib/kotlinc/bin:/usr/lib/kotlin-native/bin:${PATH}"
