@@ -193,30 +193,30 @@
   ],
   "23": [
     "javac",
+    "-J%s",
+    "-J%s",
     "-source",
     "8",
-    "-J%s",
-    "-J%s",
     "-encoding",
     "UTF-8",
     "Main.java"
   ],
   "24": [
     "javac",
+    "-J%s",
+    "-J%s",
     "-source",
     "7",
-    "-J%s",
-    "-J%s",
     "-encoding",
     "UTF-8",
     "Main.java"
   ],
   "27": [
     "javac",
+    "-J%s",
+    "-J%s",
     "-source",
     "6",
-    "-J%s",
-    "-J%s",
     "-encoding",
     "UTF-8",
     "Main.java"
