@@ -41,7 +41,7 @@ RUN set -xe && \
     npm install --legacy-peer-deps --unsafe-perm && \
     cp ../judger/wsjudged ./ && \
     chmod +x wsjudged && \
-    npm run build:main
+    npm run build:main -- --skipLibCheck
 
 
 # Binds to port 8080
