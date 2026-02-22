@@ -13,9 +13,12 @@ RUN set -xe && \
     apt-get update && \
     export DEBIAN_FRONTEND=noninteractive && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    NODE_TARBALL="$(curl -fsSL https://nodejs.org/dist/latest-v${NODE_MAJOR}.x/SHASUMS256.txt | \
-      awk -v major="${NODE_MAJOR}" '$2 ~ ("^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$") {print $2; exit}')" && \
-    NODE_VERSION="$(printf '%s' "${NODE_TARBALL}" | sed -E 's/^node-(v[0-9]+\\.[0-9]+\\.[0-9]+)-linux-x64\\.tar\\.xz$/\\1/')" && \
+    NODE_TARBALL="$(curl -fsSL "https://nodejs.org/dist/latest-v${NODE_MAJOR}.x/SHASUMS256.txt" | awk '{print $2}' | grep -E "^node-v${NODE_MAJOR}\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" | head -n 1)" && \
+    if [ -z "${NODE_TARBALL}" ]; then \
+      echo "Failed to resolve latest Node ${NODE_MAJOR} LTS tarball" && \
+      exit 1; \
+    fi && \
+    NODE_VERSION="$(printf '%s' "${NODE_TARBALL}" | cut -d'-' -f2)" && \
     curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}" && \
     tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
     rm -f "/tmp/${NODE_TARBALL}" && \
