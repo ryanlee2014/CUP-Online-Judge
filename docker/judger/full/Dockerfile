@@ -20,7 +20,25 @@ RUN set -xe && \
     cd ../ && \
     git clone https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git daemon && \
     cd daemon && \
-    npm install && \
+    NODE_TARBALL="" && \
+    for MAJOR in 22 20 18; do \
+        CANDIDATE="$(curl -fsSL "https://nodejs.org/dist/latest-v${MAJOR}.x/SHASUMS256.txt" | awk '{print $2}' | grep -E "^node-v${MAJOR}\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" | head -n 1 || true)" && \
+        if [ -n "${CANDIDATE}" ]; then \
+            NODE_TARBALL="${CANDIDATE}" && \
+            break; \
+        fi; \
+    done && \
+    if [ -z "${NODE_TARBALL}" ]; then \
+        echo "Failed to resolve a supported Node.js LTS tarball" && \
+        exit 1; \
+    fi && \
+    NODE_VERSION="${NODE_TARBALL#node-}" && \
+    NODE_VERSION="${NODE_VERSION%%-*}" && \
+    curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}" && \
+    tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
+    rm -f "/tmp/${NODE_TARBALL}" && \
+    npm config set --location=global legacy-peer-deps true && \
+    npm install --legacy-peer-deps --unsafe-perm && \
     cp ../judger/wsjudged ./ && \
     chmod +x wsjudged && \
     npm run build:main
