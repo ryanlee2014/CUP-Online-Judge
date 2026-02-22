@@ -1,7 +1,7 @@
 # Pull base image.
 FROM ubuntu:20.04
 
-ARG NODE_MAJOR=14
+ARG NODE_MAJOR=24
 
 LABEL maintainer="Ryan Lee" \
       email="gxlhybh@gmail.com"

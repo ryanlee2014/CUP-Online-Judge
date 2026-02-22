@@ -8,9 +8,11 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         name: Checkout code
         with:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
@@ -19,30 +21,26 @@ jobs:
         run: |
           echo "PKG_VERSION=$(cat docker/judger-env/VERSION)" >> $GITHUB_ENV
           echo "PKG_FULL_VERSION=$(cat docker/judger-env/VERSION)-full" >> $GITHUB_ENV
-      - uses: mr-smithers-excellent/docker-build-push@v2
-        name: Build judger environment image
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          image: ryanlee2014/cupoj-judger-env
-          tag: ${{ env.PKG_VERSION }}
-          registry: docker.io
-          dockerfile: ./docker/judger-env/base/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - uses: mr-smithers-excellent/docker-build-push@v2
-        name: Update judger environment image
+      - name: Build and push base judger environment image
+        uses: docker/build-push-action@v6
         with:
-          image: ryanlee2014/cupoj-judger-env
-          tag: latest
-          registry: docker.io
-          dockerfile: ./docker/judger-env/base/Dockerfile
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - uses: mr-smithers-excellent/docker-build-push@v2
-        name: Build judger environment image
+          context: .
+          push: true
+          file: ./docker/judger-env/base/Dockerfile
+          tags: |
+            ryanlee2014/cupoj-judger-env:${{ env.PKG_VERSION }}
+            ryanlee2014/cupoj-judger-env:latest
+      - name: Build and push full judger environment image
+        uses: docker/build-push-action@v6
         with:
-          image: ryanlee2014/cupoj-judger-env
-          tag: ${{ env.PKG_FULL_VERSION }}
-          registry: docker.io
-          dockerfile: ./docker/judger-env/full/Dockerfile
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          context: .
+          push: true
+          file: ./docker/judger-env/full/Dockerfile
+          tags: ryanlee2014/cupoj-judger-env:${{ env.PKG_FULL_VERSION }}
