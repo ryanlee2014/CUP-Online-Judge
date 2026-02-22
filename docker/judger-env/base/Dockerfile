@@ -9,15 +9,18 @@ LABEL maintainer="Ryan Lee" \
 RUN set -xe && \
     cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
     apt-get update && \
-    apt-get install -y wget software-properties-common sudo ca-certificates gnupg curl && \
+    apt-get install -y wget software-properties-common sudo ca-certificates gnupg curl xz-utils && \
     apt-get update && \
     export DEBIAN_FRONTEND=noninteractive && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    install -d /etc/apt/keyrings && \
-    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_MAJOR}.x focal main" > /etc/apt/sources.list.d/nodesource.list && \
+    NODE_TARBALL="$(curl -fsSL https://nodejs.org/dist/latest-v${NODE_MAJOR}.x/SHASUMS256.txt | \
+      awk -v major="${NODE_MAJOR}" '$2 ~ ("^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$") {print $2; exit}')" && \
+    NODE_VERSION="$(printf '%s' "${NODE_TARBALL}" | sed -E 's/^node-(v[0-9]+\\.[0-9]+\\.[0-9]+)-linux-x64\\.tar\\.xz$/\\1/')" && \
+    curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}" && \
+    tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
+    rm -f "/tmp/${NODE_TARBALL}" && \
     apt-get update && \
-    apt-get install -y nodejs cmake flex clang fp-compiler gcc g++ unzip zsh libgmp-dev libmysqlclient-dev build-essential git net-tools vim && \
+    apt-get install -y cmake flex clang fp-compiler gcc g++ unzip zsh libgmp-dev libmysqlclient-dev build-essential git net-tools vim && \
     apt-get install -y fp-compiler mono-devel openjdk-11-jdk && \
     add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
     apt-get update && \
