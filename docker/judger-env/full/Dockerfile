@@ -9,6 +9,8 @@ ARG JUDGE_UID=1536
 LABEL maintainer="Ryan Lee" \
       email="gxlhybh@gmail.com"
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # Install Kotlin compiler and judge runner user
 RUN set -xeuo pipefail && \
     export DEBIAN_FRONTEND=noninteractive && \

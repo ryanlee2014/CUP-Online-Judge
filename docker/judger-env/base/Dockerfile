@@ -11,6 +11,8 @@ ARG KOTLIN_NATIVE_NAME="kotlin-native-linux-${KOTLIN_NATIVE_VERSION}"
 LABEL maintainer="Ryan Lee" \
       email="gxlhybh@gmail.com"
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # Install Node.js and language toolchains
 RUN set -xeuo pipefail && \
     export DEBIAN_FRONTEND=noninteractive && \

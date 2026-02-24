@@ -11,6 +11,8 @@ FROM ryanlee2014/cupoj-judger-env:1.2.3
 LABEL maintainer="Ryan Lee" \
       email="gxlhybh@gmail.com"
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 ARG JUDGER_REPO="https://github.com/CUP-ACM-Programming-Club/CUP-Online-Judge-Judger.git"
 ARG JUDGER_REF="master"
 ARG DAEMON_REPO="https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git"
