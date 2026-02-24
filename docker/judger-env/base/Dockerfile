@@ -16,7 +16,7 @@ RUN set -xeuo pipefail && \
     apt-get install -y --no-install-recommends wget software-properties-common sudo ca-certificates gnupg curl xz-utils && \
     export DEBIAN_FRONTEND=noninteractive && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${NODE_MAJOR}.x/SHASUMS256.txt" | awk -v major="${NODE_MAJOR}" '$2 ~ "^node-" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" {print $1 " " $2; exit}')" && \
+    NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${NODE_MAJOR}.x/SHASUMS256.txt" | awk -v major="${NODE_MAJOR}" '$2 ~ "^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" {print $1 " " $2; exit}')" && \
     NODE_TARBALL="${NODE_TARBALL_INFO#* }" && \
     NODE_TARBALL_SHA256="${NODE_TARBALL_INFO%% *}" && \
     if [ -z "${NODE_TARBALL_SHA256}" ] || [ -z "${NODE_TARBALL}" ]; then \
