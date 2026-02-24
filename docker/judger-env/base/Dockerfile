@@ -51,13 +51,19 @@ RUN set -xeuo pipefail && \
         libmysqlclient-dev \
         mono-devel \
         net-tools \
-        openjdk-11-jdk \
         unzip \
         vim \
         zsh && \
-    add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends gcc-10 g++-10 && \
+    if ! apt-get install -y --no-install-recommends openjdk-11-jdk; then \
+      echo "openjdk-11-jdk not available, fallback to default-jdk"; \
+      apt-get install -y --no-install-recommends default-jdk; \
+    fi && \
+    if add-apt-repository ppa:ubuntu-toolchain-r/test -y; then \
+      apt-get update && \
+      apt-get install -y --no-install-recommends gcc-10 g++-10 || true; \
+    else \
+      echo "Skipping optional ubuntu-toolchain-r/test PPA; using default compilers"; \
+    fi && \
     cd ~ && \
     KOTLIN_NATIVE_TARBALL="${KOTLIN_NATIVE_NAME}.tar.gz" && \
     wget -q "https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_NATIVE_VERSION}/${KOTLIN_NATIVE_TARBALL}" -O "/tmp/${KOTLIN_NATIVE_TARBALL}" && \
