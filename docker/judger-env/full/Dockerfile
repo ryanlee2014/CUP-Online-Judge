@@ -60,4 +60,4 @@ RUN set -xeuo pipefail && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-CMD echo 'hello world!'
+CMD ["echo", "hello world!"]

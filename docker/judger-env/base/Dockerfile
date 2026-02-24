@@ -1,7 +1,8 @@
 # Pull base image.
 FROM ubuntu:20.04
 
-ARG NODE_MAJOR=24
+ARG NODE_MAJOR="24 22 20 18 16 14"
+ARG NODE_MAJOR_LIST="${NODE_MAJOR}"
 ARG NODEJS_SHA256=""
 ARG KOTLIN_NATIVE_VERSION=1.3.72
 ARG KOTLIN_NATIVE_SHA256=""
@@ -23,7 +24,6 @@ RUN set -xeuo pipefail && \
         wget \
         xz-utils && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    NODE_MAJOR_LIST="${NODE_MAJOR}" && \
     NODE_BUILD_OK="false" && \
     for MAJOR in ${NODE_MAJOR_LIST}; do \
       echo "Trying Node.js ${MAJOR} LTS" && \
@@ -41,13 +41,19 @@ RUN set -xeuo pipefail && \
       NODE_VERSION="$(printf '%s' "${NODE_TARBALL}" | cut -d'-' -f2)" && \
       if ! curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}"; then \
         echo "Failed to download Node.js ${NODE_TARBALL}, try next major" && \
+        rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
       if ! printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "/tmp/${NODE_TARBALL}" | sha256sum -c -; then \
         echo "SHA256 mismatch for ${NODE_TARBALL}, try next major" && \
+        rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
-      tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
+      if ! tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1; then \
+        echo "Failed to extract Node.js archive for major ${MAJOR}, try next major" && \
+        rm -f "/tmp/${NODE_TARBALL}" && \
+        continue; \
+      fi && \
       rm -f "/tmp/${NODE_TARBALL}" && \
       NODE_BUILD_OK="true" && \
       break; \
@@ -117,4 +123,4 @@ RUN set -xeuo pipefail && \
 
 ENV PATH="/usr/lib/kotlinc/bin:/usr/lib/kotlin-native/bin:${PATH}"
 
-CMD echo 'hello world!'
+CMD ["echo", "hello world!"]
