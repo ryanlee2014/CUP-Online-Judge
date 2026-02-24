@@ -35,6 +35,7 @@ RUN set -xeuo pipefail && \
         continue; \
       fi && \
       NODE_TARBALL="${NODE_TARBALL_INFO#* }" && \
+      NODE_TARBALL="${NODE_TARBALL##*/}" && \
       NODE_TARBALL_SHA256="${NODE_TARBALL_INFO%% *}" && \
       if [ -n "${NODEJS_SHA256}" ] && [ "${NODEJS_SHA256}" != "${NODE_TARBALL_SHA256}" ]; then \
         echo "Node.js SHA256 mismatch for major ${MAJOR}, expected ${NODEJS_SHA256} but got ${NODE_TARBALL_SHA256}" && \
@@ -46,9 +47,9 @@ RUN set -xeuo pipefail && \
         rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
-      if ! printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "/tmp/${NODE_TARBALL}" | sha256sum -c -; then \
+      if ! printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "${NODE_TARBALL}" | sha256sum -c -; then \
         echo "SHA256 mismatch for ${NODE_TARBALL}, try next major" && \
-        rm -f "/tmp/${NODE_TARBALL}" && \
+        rm -f "${NODE_TARBALL}" "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
       if ! tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1; then \

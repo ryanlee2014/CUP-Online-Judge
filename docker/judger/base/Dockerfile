@@ -38,6 +38,7 @@ RUN set -xeuo pipefail && \
         continue; \
       fi && \
       NODE_TARBALL="${NODE_TARBALL_INFO#* }" && \
+      NODE_TARBALL="${NODE_TARBALL##*/}" && \
       NODE_TARBALL_SHA256="${NODE_TARBALL_INFO%% *}" && \
       NODE_VERSION="${NODE_TARBALL#node-}" && \
       NODE_VERSION="${NODE_VERSION%%-*}" && \
