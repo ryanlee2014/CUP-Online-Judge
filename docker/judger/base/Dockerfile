@@ -21,7 +21,7 @@ RUN set -xe && \
     git clone https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git daemon && \
     cd daemon && \
     NODE_TARBALL="" && \
-    for MAJOR in 22 20 18; do \
+    for MAJOR in 24 22 20; do \
         CANDIDATE="$(curl -fsSL "https://nodejs.org/dist/latest-v${MAJOR}.x/SHASUMS256.txt" | awk '{print $2}' | grep -E "^node-v${MAJOR}\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" | head -n 1 || true)" && \
         if [ -n "${CANDIDATE}" ]; then \
             NODE_TARBALL="${CANDIDATE}" && \
