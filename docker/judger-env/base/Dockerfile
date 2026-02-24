@@ -23,22 +23,39 @@ RUN set -xeuo pipefail && \
         wget \
         xz-utils && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${NODE_MAJOR}.x/SHASUMS256.txt" | awk -v major="${NODE_MAJOR}" '$2 ~ "^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" {print $1 " " $2; exit}')" && \
-    NODE_TARBALL="${NODE_TARBALL_INFO#* }" && \
-    NODE_TARBALL_SHA256="${NODE_TARBALL_INFO%% *}" && \
-    if [ -z "${NODE_TARBALL_SHA256}" ] || [ -z "${NODE_TARBALL}" ]; then \
-      echo "Failed to resolve latest Node ${NODE_MAJOR} LTS tarball" && \
+    NODE_MAJOR_LIST="${NODE_MAJOR}" && \
+    NODE_BUILD_OK="false" && \
+    for MAJOR in ${NODE_MAJOR_LIST}; do \
+      echo "Trying Node.js ${MAJOR} LTS" && \
+      NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${MAJOR}.x/SHASUMS256.txt" | awk -v major="${MAJOR}" '$2 ~ "^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" { print $1 " " $2; exit }' || true)" && \
+      if [ -z "${NODE_TARBALL_INFO}" ]; then \
+        echo "No tarball found for Node.js major ${MAJOR}, skip." && \
+        continue; \
+      fi && \
+      NODE_TARBALL="${NODE_TARBALL_INFO#* }" && \
+      NODE_TARBALL_SHA256="${NODE_TARBALL_INFO%% *}" && \
+      if [ -n "${NODEJS_SHA256}" ] && [ "${NODEJS_SHA256}" != "${NODE_TARBALL_SHA256}" ]; then \
+        echo "Node.js SHA256 mismatch for major ${MAJOR}, expected ${NODEJS_SHA256} but got ${NODE_TARBALL_SHA256}" && \
+        exit 1; \
+      fi && \
+      NODE_VERSION="$(printf '%s' "${NODE_TARBALL}" | cut -d'-' -f2)" && \
+      if ! curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}"; then \
+        echo "Failed to download Node.js ${NODE_TARBALL}, try next major" && \
+        continue; \
+      fi && \
+      if ! printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "/tmp/${NODE_TARBALL}" | sha256sum -c -; then \
+        echo "SHA256 mismatch for ${NODE_TARBALL}, try next major" && \
+        continue; \
+      fi && \
+      tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
+      rm -f "/tmp/${NODE_TARBALL}" && \
+      NODE_BUILD_OK="true" && \
+      break; \
+    done && \
+    if [ "${NODE_BUILD_OK}" != "true" ]; then \
+      echo "Failed to install Node.js from majors: ${NODE_MAJOR_LIST}" && \
       exit 1; \
     fi && \
-    if [ -n "${NODEJS_SHA256}" ] && [ "${NODEJS_SHA256}" != "${NODE_TARBALL_SHA256}" ]; then \
-      echo "Node.js SHA256 mismatch, expected ${NODEJS_SHA256} but got ${NODE_TARBALL_SHA256}" && \
-      exit 1; \
-    fi && \
-    NODE_VERSION="$(printf '%s' "${NODE_TARBALL}" | cut -d'-' -f2)" && \
-    curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}" && \
-    printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "/tmp/${NODE_TARBALL}" | sha256sum -c - && \
-    tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
-    rm -f "/tmp/${NODE_TARBALL}" && \
     apt-get install -y --no-install-recommends \
         build-essential \
         cmake \
