@@ -40,9 +40,18 @@ RUN set -xeuo pipefail && \
       NODE_VERSION="${NODE_TARBALL#node-}" && \
       NODE_VERSION="${NODE_VERSION%%-*}" && \
       echo "Resolved Node.js tarball ${NODE_TARBALL}" && \
-      curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}" && \
-      printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "${NODE_TARBALL}" | sha256sum -c - && \
-      tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
+      if ! curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}"; then \
+        echo "Failed to download Node.js ${NODE_TARBALL}, try next major" && \
+        continue; \
+      fi && \
+      if ! printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "${NODE_TARBALL}" | sha256sum -c -; then \
+        echo "SHA256 mismatch for ${NODE_TARBALL}, try next major" && \
+        continue; \
+      fi && \
+      if ! tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1; then \
+        echo "Failed to extract Node.js archive for major ${MAJOR}, try next major" && \
+        continue; \
+      fi && \
       rm -f "/tmp/${NODE_TARBALL}" && \
     npm config set --location=global legacy-peer-deps true && \
     rm -rf node_modules && \
