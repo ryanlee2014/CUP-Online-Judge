@@ -24,6 +24,15 @@ Install [Docker](https://get.docker.com/) and [Docker Compose](https://docs.dock
 
 [Manual](/docs/INSTALL_DOCKER.md)
 
+## Build args used by Dockerfiles
+- `JUDGER_REPO` (default: `https://github.com/CUP-ACM-Programming-Club/CUP-Online-Judge-Judger.git`)
+- `JUDGER_REF` (default: `master`)
+- `DAEMON_REPO` (default: `https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git`)
+- `DAEMON_REF` (default: `master`)
+- `NODE_MAJOR_LIST` (default: `24 22 20`)
+- `KOTLIN_NATIVE_VERSION` / `KOTLIN_NATIVE_SHA256`
+- `KOTLIN_COMPILER_VERSION` / `KOTLIN_COMPILER_SHA256`
+
 ## Usage(all in one)
 ```bash
 ./init-env.sh

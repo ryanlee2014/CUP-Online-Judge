@@ -21,6 +21,15 @@
 
 [安装手册](/docs/INSTALL_DOCKER.zh-cn.md)
 
+## Docker 构建参数
+- `JUDGER_REPO`（默认：`https://github.com/CUP-ACM-Programming-Club/CUP-Online-Judge-Judger.git`）
+- `JUDGER_REF`（默认：`master`）
+- `DAEMON_REPO`（默认：`https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git`）
+- `DAEMON_REF`（默认：`master`）
+- `NODE_MAJOR_LIST`（默认：`24 22 20`）
+- `KOTLIN_NATIVE_VERSION` / `KOTLIN_NATIVE_SHA256`
+- `KOTLIN_COMPILER_VERSION` / `KOTLIN_COMPILER_SHA256`
+
 ## 使用方法(整合脚本)
 ```bash
 ./init-env.sh

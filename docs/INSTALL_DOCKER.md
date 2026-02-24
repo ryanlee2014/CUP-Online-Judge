@@ -34,3 +34,8 @@ brew cask install docker
 
 ## Windows(**Strongly not recommended**)
 [Google](https://www.google.com)Lol
+
+## Docker build reproducibility notes
+The repository Dockerfiles used in CI expose build args for source pinning and optional checksum verification:
+`JUDGER_REPO`, `JUDGER_REF`, `DAEMON_REPO`, `DAEMON_REF`, `NODE_MAJOR_LIST`,
+`KOTLIN_NATIVE_VERSION`/`KOTLIN_NATIVE_SHA256`, `KOTLIN_COMPILER_VERSION`/`KOTLIN_COMPILER_SHA256`.
