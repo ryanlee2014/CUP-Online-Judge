@@ -40,7 +40,7 @@ All build args can be overridden in CI or local `docker build` commands to pin e
 Recommended pattern for a pinned release:
 `--build-arg JUDGER_REF=<commit_sha>`
 `--build-arg DAEMON_REF=<commit_sha>`
-`--build-arg NODE_MAJOR=24`
+`--build-arg NODE_MAJOR="24 22 20 18 16 14"`
 `--build-arg KOTLIN_NATIVE_SHA256=<sha256>`
 `--build-arg KOTLIN_COMPILER_SHA256=<sha256>`
 
