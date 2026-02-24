@@ -56,16 +56,21 @@ RUN set -xeuo pipefail && \
         continue; \
       fi && \
       rm -f "/tmp/${NODE_TARBALL}" && \
-    npm config set --location=global legacy-peer-deps true && \
-    rm -rf node_modules && \
-    cp ../judger/wsjudged ./ && \
-    chmod +x wsjudged && \
-    if npm install --legacy-peer-deps --unsafe-perm && npm run build:main -- --skipLibCheck; then \
-      NODE_BUILD_OK="true"; \
-      break; \
-    fi && \
-    rm -rf node_modules && \
-    echo "Node.js ${NODE_VERSION} failed to build daemon service. Try next major."; \
+      npm config set --location=global legacy-peer-deps true && \
+      rm -rf node_modules && \
+      cp ../judger/wsjudged ./ && \
+      chmod +x wsjudged && \
+      if npm install --legacy-peer-deps --unsafe-perm; then \
+        if npm run build:main -- --skipLibCheck; then \
+          NODE_BUILD_OK="true"; \
+          break; \
+        fi; \
+        echo "npm build failed on Node ${NODE_VERSION}"; \
+      else \
+        echo "npm install failed on Node ${NODE_VERSION}"; \
+      fi && \
+      rm -rf node_modules && \
+      echo "Node.js ${NODE_VERSION} failed to build daemon service. Try next major."; \
     done && \
     if [ "${NODE_BUILD_OK}" != "true" ]; then \
       echo "Failed to build Judge-Daemon-Service with all Node.js majors in NODE_MAJOR_LIST=${NODE_MAJOR_LIST}"; \
