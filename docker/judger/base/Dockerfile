@@ -15,7 +15,8 @@ ARG JUDGER_REPO="https://github.com/CUP-ACM-Programming-Club/CUP-Online-Judge-Ju
 ARG JUDGER_REF="master"
 ARG DAEMON_REPO="https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git"
 ARG DAEMON_REF="master"
-ARG NODE_MAJOR_LIST="24 22 20"
+ARG NODE_MAJOR="24 22 20"
+ARG NODE_MAJOR_LIST="${NODE_MAJOR}"
 
 # Install Node.js
 RUN set -xeuo pipefail && \
@@ -28,7 +29,7 @@ RUN set -xeuo pipefail && \
     cd daemon && \
     NODE_TARBALL_INFO="" && \
     for MAJOR in ${NODE_MAJOR_LIST}; do \
-    NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${MAJOR}.x/SHASUMS256.txt" | awk -v major="${MAJOR}" '$2 ~ "^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" { print $1 " " $2; exit }')" && \
+    NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${MAJOR}.x/SHASUMS256.txt" | awk -v major="${MAJOR}" '$2 ~ "^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" { print $1 " " $2; exit }' || true)" && \
         if [ -n "${NODE_TARBALL_INFO}" ]; then \
             break; \
         fi; \

@@ -29,9 +29,21 @@ Install [Docker](https://get.docker.com/) and [Docker Compose](https://docs.dock
 - `JUDGER_REF` (default: `master`)
 - `DAEMON_REPO` (default: `https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git`)
 - `DAEMON_REF` (default: `master`)
-- `NODE_MAJOR_LIST` (default: `24 22 20`)
+- `NODE_MAJOR` (default: `24 22 20`)
+- `NODE_MAJOR_LIST` (alias of `NODE_MAJOR`, retained for compatibility)
 - `KOTLIN_NATIVE_VERSION` / `KOTLIN_NATIVE_SHA256`
 - `KOTLIN_COMPILER_VERSION` / `KOTLIN_COMPILER_SHA256`
+
+### Build strategy and reproducibility
+All build args can be overridden in CI or local `docker build` commands to pin external inputs when needed.  
+Recommended pattern for a pinned release:
+`--build-arg JUDGER_REF=<commit_sha>`
+`--build-arg DAEMON_REF=<commit_sha>`
+`--build-arg NODE_MAJOR=24`
+`--build-arg KOTLIN_NATIVE_SHA256=<sha256>`
+`--build-arg KOTLIN_COMPILER_SHA256=<sha256>`
+
+The `KOTLIN_*_SHA256` arguments are optional. Set them when you need deterministic artifacts; otherwise build still follows latest compatible upstream releases.
 
 ## Usage(all in one)
 ```bash

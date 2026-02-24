@@ -39,3 +39,15 @@ brew cask install docker
 The repository Dockerfiles used in CI expose build args for source pinning and optional checksum verification:
 `JUDGER_REPO`, `JUDGER_REF`, `DAEMON_REPO`, `DAEMON_REF`, `NODE_MAJOR_LIST`,
 `KOTLIN_NATIVE_VERSION`/`KOTLIN_NATIVE_SHA256`, `KOTLIN_COMPILER_VERSION`/`KOTLIN_COMPILER_SHA256`.
+
+### Build argument strategy for safer CI
+If you want deterministic CI output, pin upstream checkouts and checksums explicitly:
+
+- `--build-arg JUDGER_REF=<commit_sha>`
+- `--build-arg DAEMON_REF=<commit_sha>`
+- `--build-arg NODE_MAJOR=<major_version>`
+- `--build-arg NODE_MAJOR_LIST=<major list>` (defaults to `NODE_MAJOR`, kept for compatibility)
+- `--build-arg KOTLIN_NATIVE_SHA256=<sha256>`
+- `--build-arg KOTLIN_COMPILER_SHA256=<sha256>`
+
+If no checksum is provided, the build will continue with latest upstream-shared tarball metadata, which keeps CI aligned with LTS point releases.

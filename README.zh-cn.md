@@ -26,9 +26,21 @@
 - `JUDGER_REF`（默认：`master`）
 - `DAEMON_REPO`（默认：`https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git`）
 - `DAEMON_REF`（默认：`master`）
-- `NODE_MAJOR_LIST`（默认：`24 22 20`）
+- `NODE_MAJOR`（默认：`24 22 20`）
+- `NODE_MAJOR_LIST`（兼容 `NODE_MAJOR`）
 - `KOTLIN_NATIVE_VERSION` / `KOTLIN_NATIVE_SHA256`
 - `KOTLIN_COMPILER_VERSION` / `KOTLIN_COMPILER_SHA256`
+
+### 构建策略与可复现性
+构建参数可在 CI 或本地 `docker build` 时覆盖，用于固定外部依赖版本。  
+建议固定版本时使用：
+`--build-arg JUDGER_REF=<commit_sha>`
+`--build-arg DAEMON_REF=<commit_sha>`
+`--build-arg NODE_MAJOR=24`
+`--build-arg KOTLIN_NATIVE_SHA256=<sha256>`
+`--build-arg KOTLIN_COMPILER_SHA256=<sha256>`
+
+`KOTLIN_*_SHA256` 为可选参数。需要严格复现时请填写对应哈希，平时可保持默认以跟随上游更新。
 
 ## 使用方法(整合脚本)
 ```bash

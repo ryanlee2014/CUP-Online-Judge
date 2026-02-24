@@ -9,14 +9,25 @@ ARG JUDGE_UID=1536
 LABEL maintainer="Ryan Lee" \
       email="gxlhybh@gmail.com"
 
-# Install Node.js
+# Install Kotlin compiler and judge runner user
 RUN set -xeuo pipefail && \
+    export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get install -y --no-install-recommends libncurses5 && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        wget \
+        xz-utils \
+        unzip && \
     if ! id -u judge >/dev/null 2>&1; then \
       if useradd -m -u "${JUDGE_UID}" judge 2>/dev/null; then :; else useradd -m judge; fi; \
     fi && \
-    cd ~ && \
+    judge_home="$(eval echo ~judge)" && \
+    if [ -z "${judge_home}" ] || [ "${judge_home}" = "/" ]; then \
+      judge_home="/home/judge"; \
+    fi && \
+    mkdir -p "${judge_home}" && \
+    mkdir -p /tmp && \
     wget -q "https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_COMPILER_VERSION}/${KOTLIN_COMPILER_NAME}" -O "/tmp/${KOTLIN_COMPILER_NAME}" && \
     if [ -n "${KOTLIN_COMPILER_SHA256}" ]; then \
       printf "%s  /tmp/%s\n" "${KOTLIN_COMPILER_SHA256}" "${KOTLIN_COMPILER_NAME}" | sha256sum -c -; \
@@ -27,16 +38,19 @@ RUN set -xeuo pipefail && \
     cd ~ && \
     echo 'fun main(args: Array<String>) {println("Hello, World!")}' > hello.kt && \
     /usr/lib/kotlin-native/bin/kotlinc hello.kt -o hello -opt && \
-    mkdir -p /home/judge && \
+    mkdir -p "${judge_home}/.cache" && \
+    chown -R judge:judge "${judge_home}" && \
     if [ -d ~/.konan ]; then \
-      mv ~/.konan /home/judge/.konan; \
+      rm -rf "${judge_home}/.konan"; \
+      mv ~/.konan "${judge_home}/.konan"; \
     fi && \
-    if [ -d /home/judge/.konan ]; then \
-      chgrp -R judge /home/judge/.konan && \
-      chown -R judge /home/judge/.konan; \
+    if [ -d "${judge_home}/.konan" ]; then \
+      chgrp -R judge "${judge_home}/.konan" && \
+      chown -R judge "${judge_home}/.konan"; \
     fi && \
-    rm -rf /home/judge/.bashrc && \
+    rm -rf "${judge_home}/.bashrc" && \
     cd ~ && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 CMD echo 'hello world!'

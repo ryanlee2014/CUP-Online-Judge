@@ -10,11 +10,11 @@ ARG KOTLIN_NATIVE_NAME="kotlin-native-linux-${KOTLIN_NATIVE_VERSION}"
 LABEL maintainer="Ryan Lee" \
       email="gxlhybh@gmail.com"
 
-# Install Node.js
+# Install Node.js and language toolchains
 RUN set -xeuo pipefail && \
+    export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get install -y --no-install-recommends wget software-properties-common sudo ca-certificates gnupg curl xz-utils && \
-    export DEBIAN_FRONTEND=noninteractive && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${NODE_MAJOR}.x/SHASUMS256.txt" | awk -v major="${NODE_MAJOR}" '$2 ~ "^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" {print $1 " " $2; exit}')" && \
     NODE_TARBALL="${NODE_TARBALL_INFO#* }" && \
@@ -33,7 +33,7 @@ RUN set -xeuo pipefail && \
     tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
     rm -f "/tmp/${NODE_TARBALL}" && \
     apt-get update && \
-    apt-get install -y --no-install-recommends cmake flex clang fp-compiler gcc g++ unzip zsh libgmp-dev libmysqlclient-dev build-essential git net-tools vim fp-compiler mono-devel openjdk-11-jdk && \
+    apt-get install -y --no-install-recommends cmake flex clang fp-compiler gcc g++ unzip zsh libgmp-dev libmysqlclient-dev build-essential git net-tools vim mono-devel openjdk-11-jdk && \
     add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
     apt-get update && \
     apt-get install -y --no-install-recommends gcc-10 g++-10 && \
@@ -51,10 +51,11 @@ RUN set -xeuo pipefail && \
       echo "Failed to locate java executable" && \
       exit 1; \
     fi && \
-    JAVA_HOME_GUESS="$(dirname "$(dirname "${JAVA_BIN}")")" && \
-    LIBJLI_PATH="$(find "${JAVA_HOME_GUESS}" -name libjli.so 2>/dev/null | head -n 1 || true)" && \
+    JAVA_BIN_DIR="$(dirname "${JAVA_BIN}")" && \
+    JAVA_HOME_GUESS="${JAVA_HOME:-$(dirname "${JAVA_BIN_DIR}")}" && \
+    LIBJLI_PATH="$(find "${JAVA_HOME_GUESS}" -maxdepth 5 -name libjli.so 2>/dev/null | head -n 1 || true)" && \
     if [ -z "${LIBJLI_PATH}" ]; then \
-      LIBJLI_PATH="$(find /usr/lib/jvm -name libjli.so 2>/dev/null | head -n 1 || true)"; \
+      LIBJLI_PATH="$(find /usr/lib/jvm -maxdepth 6 -name libjli.so 2>/dev/null | head -n 1 || true)"; \
     fi && \
     if [ -z "${LIBJLI_PATH}" ]; then \
       echo "Failed to locate libjli.so" && \

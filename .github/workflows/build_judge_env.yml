@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "PKG_VERSION=$(cat docker/judger-env/VERSION)" >> $GITHUB_ENV
           echo "PKG_FULL_VERSION=$(cat docker/judger-env/VERSION)-full" >> $GITHUB_ENV
-      - name: Validate image tag version
+      - name: Validate image tags
         run: |
           if [ -z "${PKG_VERSION}" ] || [ -z "${PKG_FULL_VERSION}" ]; then
             echo "PKG_VERSION or PKG_FULL_VERSION is empty"
