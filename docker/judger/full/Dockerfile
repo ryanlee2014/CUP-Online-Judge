@@ -15,7 +15,7 @@ ARG JUDGER_REPO="https://github.com/CUP-ACM-Programming-Club/CUP-Online-Judge-Ju
 ARG JUDGER_REF="master"
 ARG DAEMON_REPO="https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git"
 ARG DAEMON_REF="master"
-ARG NODE_MAJOR="24 22 20"
+ARG NODE_MAJOR="24 22 20 18 16 14"
 ARG NODE_MAJOR_LIST="${NODE_MAJOR}"
 
 # Install Node.js

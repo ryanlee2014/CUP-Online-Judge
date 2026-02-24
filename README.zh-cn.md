@@ -26,7 +26,7 @@
 - `JUDGER_REF`（默认：`master`）
 - `DAEMON_REPO`（默认：`https://github.com/ryanlee2014/CUP-Online-Judge-Judge-Daemon-Service.git`）
 - `DAEMON_REF`（默认：`master`）
-- `NODE_MAJOR`（默认：`24 22 20`）
+- `NODE_MAJOR`（默认：`24 22 20 18 16 14`）
 - `NODE_MAJOR_LIST`（兼容 `NODE_MAJOR`）
 - `NODE_MAJOR` / `NODE_MAJOR_LIST` 会按从左到右顺序尝试，使用第一个可以成功安装并通过 `npm run build:main -- --skipLibCheck` 的版本。
 - `KOTLIN_NATIVE_VERSION` / `KOTLIN_NATIVE_SHA256`
