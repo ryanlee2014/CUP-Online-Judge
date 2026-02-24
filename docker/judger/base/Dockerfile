@@ -42,14 +42,17 @@ RUN set -xeuo pipefail && \
       echo "Resolved Node.js tarball ${NODE_TARBALL}" && \
       if ! curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}"; then \
         echo "Failed to download Node.js ${NODE_TARBALL}, try next major" && \
+        rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
       if ! printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "${NODE_TARBALL}" | sha256sum -c -; then \
         echo "SHA256 mismatch for ${NODE_TARBALL}, try next major" && \
+        rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
       if ! tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1; then \
         echo "Failed to extract Node.js archive for major ${MAJOR}, try next major" && \
+        rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
       rm -f "/tmp/${NODE_TARBALL}" && \
@@ -61,6 +64,7 @@ RUN set -xeuo pipefail && \
       NODE_BUILD_OK="true"; \
       break; \
     fi && \
+    rm -rf node_modules && \
     echo "Node.js ${NODE_VERSION} failed to build daemon service. Try next major."; \
     done && \
     if [ "${NODE_BUILD_OK}" != "true" ]; then \
