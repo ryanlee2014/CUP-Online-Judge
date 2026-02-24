@@ -21,6 +21,7 @@ RUN set -xeuo pipefail && \
         unzip \
         xz-utils \
         libncurses5 && \
+    # keep Kotlin compiler + native versions explicit when provided
     if ! id -u judge >/dev/null 2>&1; then \
       if useradd -m -u "${JUDGE_UID}" judge 2>/dev/null; then :; else useradd -m judge; fi; \
     fi && \
@@ -33,9 +34,15 @@ RUN set -xeuo pipefail && \
     fi && \
     mkdir -p "${judge_home}" && \
     mkdir -p /tmp && \
-    wget -q "https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_COMPILER_VERSION}/${KOTLIN_COMPILER_NAME}" -O "/tmp/${KOTLIN_COMPILER_NAME}" && \
+    if ! wget -q "https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_COMPILER_VERSION}/${KOTLIN_COMPILER_NAME}" -O "/tmp/${KOTLIN_COMPILER_NAME}"; then \
+      echo "Failed to download Kotlin compiler package ${KOTLIN_COMPILER_NAME} for version ${KOTLIN_COMPILER_VERSION}" && \
+      echo "URL: https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_COMPILER_VERSION}/${KOTLIN_COMPILER_NAME}" && \
+      exit 1; \
+    fi && \
     if [ -n "${KOTLIN_COMPILER_SHA256}" ]; then \
       printf "%s  /tmp/%s\n" "${KOTLIN_COMPILER_SHA256}" "${KOTLIN_COMPILER_NAME}" | sha256sum -c -; \
+    else \
+      echo "KOTLIN_COMPILER_SHA256 not provided, skipping compiler checksum verification"; \
     fi && \
     unzip -q "/tmp/${KOTLIN_COMPILER_NAME}" -d ~ && \
     mv /root/kotlinc /usr/lib/kotlinc && \
@@ -48,8 +55,9 @@ RUN set -xeuo pipefail && \
     fi && \
     /usr/lib/kotlin-native/bin/kotlinc hello.kt -o hello -opt && \
     mkdir -p "${judge_home}/.cache" && \
-    chown -R judge:judge "${judge_home}" && \
+    chown -R judge:judge "${judge_home}/.cache" && \
     if [ -d ~/.konan ]; then \
+      echo "Migrating ~/.konan cache to ${judge_home}/.konan"; \
       rm -rf "${judge_home}/.konan"; \
       mv ~/.konan "${judge_home}/.konan"; \
     fi && \

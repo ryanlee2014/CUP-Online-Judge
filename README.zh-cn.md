@@ -43,6 +43,11 @@
 
 `KOTLIN_*_SHA256` 为可选参数。需要严格复现时请填写对应哈希，平时可保持默认以跟随上游更新。
 
+### 什么场景下建议固定版本
+- CI 回退、发布复核：固定 `*_REF` 与 `KOTLIN_*_SHA256`。
+- 上游改动导致构建失败：先固定 `NODE_MAJOR` / `NODE_MAJOR_LIST`、`NODEJS_SHA256` 和 git ref 重试。
+- 跨区域/离线复现：固定 `KOTLIN_NATIVE_VERSION` 与 `KOTLIN_COMPILER_VERSION`，并与 SHA 一并固定。
+
 ## 使用方法(整合脚本)
 ```bash
 ./init-env.sh

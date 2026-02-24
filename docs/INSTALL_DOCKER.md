@@ -35,6 +35,29 @@ brew cask install docker
 ## Windows(**Strongly not recommended**)
 [Google](https://www.google.com)Lol
 
+## Reproducible docker build options
+When running builds in CI or locally, the following args can be passed to pin external inputs:
+
+- `JUDGER_REPO` / `JUDGER_REF`
+- `DAEMON_REPO` / `DAEMON_REF`
+- `NODE_MAJOR` / `NODE_MAJOR_LIST` (fallback order, default `24 22 20 18 16 14`)
+- `KOTLIN_NATIVE_VERSION` / `KOTLIN_NATIVE_SHA256`
+- `KOTLIN_COMPILER_VERSION` / `KOTLIN_COMPILER_SHA256`
+
+Example:
+
+```bash
+docker build \
+  --build-arg JUDGER_REF=<commit_sha> \
+  --build-arg DAEMON_REF=<commit_sha> \
+  --build-arg NODE_MAJOR="24 22 20 18 16 14" \
+  --build-arg KOTLIN_NATIVE_SHA256=<sha256> \
+  --build-arg KOTLIN_COMPILER_SHA256=<sha256> \
+  -f docker/judger/base/Dockerfile .
+```
+
+For deterministic CI runs, pin `*_REF` and relevant `*_SHA256` values before rerun.
+
 ## Docker build reproducibility notes
 The repository Dockerfiles used in CI expose build args for source pinning and optional checksum verification:
 `JUDGER_REPO`, `JUDGER_REF`, `DAEMON_REPO`, `DAEMON_REF`, `NODE_MAJOR_LIST`,

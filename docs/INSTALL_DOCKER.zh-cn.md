@@ -34,3 +34,26 @@ brew cask install docker
 
 ## Windows(**不建议**)
 [Google](https://www.google.com)Lol
+
+## 可复现构建参数
+在 CI 或本地手动构建镜像时，可通过以下参数固定外部依赖：
+
+- `JUDGER_REPO` / `JUDGER_REF`
+- `DAEMON_REPO` / `DAEMON_REF`
+- `NODE_MAJOR` / `NODE_MAJOR_LIST`（回退顺序，默认 `24 22 20 18 16 14`）
+- `KOTLIN_NATIVE_VERSION` / `KOTLIN_NATIVE_SHA256`
+- `KOTLIN_COMPILER_VERSION` / `KOTLIN_COMPILER_SHA256`
+
+示例：
+
+```bash
+docker build \
+  --build-arg JUDGER_REF=<commit_sha> \
+  --build-arg DAEMON_REF=<commit_sha> \
+  --build-arg NODE_MAJOR="24 22 20 18 16 14" \
+  --build-arg KOTLIN_NATIVE_SHA256=<sha256> \
+  --build-arg KOTLIN_COMPILER_SHA256=<sha256> \
+  -f docker/judger/base/Dockerfile .
+```
+
+需要严格复现时，建议固定 `*_REF` 和对应的 `*_SHA256` 后再重试构建。

@@ -26,6 +26,9 @@ RUN set -xeuo pipefail && \
         wget \
         xz-utils && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    if [ -z "${NODE_MAJOR_LIST}" ]; then \
+      NODE_MAJOR_LIST="${NODE_MAJOR}"; \
+    fi && \
     NODE_BUILD_OK="false" && \
     for MAJOR in ${NODE_MAJOR_LIST}; do \
       echo "Trying Node.js ${MAJOR} LTS" && \
@@ -40,6 +43,8 @@ RUN set -xeuo pipefail && \
       if [ -n "${NODEJS_SHA256}" ] && [ "${NODEJS_SHA256}" != "${NODE_TARBALL_SHA256}" ]; then \
         echo "Node.js SHA256 mismatch for major ${MAJOR}, expected ${NODEJS_SHA256} but got ${NODE_TARBALL_SHA256}" && \
         exit 1; \
+      elif [ -z "${NODEJS_SHA256}" ]; then \
+        echo "NODEJS_SHA256 not set, using upstream hash ${NODE_TARBALL_SHA256} for major ${MAJOR}"; \
       fi && \
       NODE_VERSION="$(printf '%s' "${NODE_TARBALL}" | cut -d'-' -f2)" && \
       if ! curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}"; then \
@@ -48,8 +53,11 @@ RUN set -xeuo pipefail && \
         continue; \
       fi && \
       if ! printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "${NODE_TARBALL}" | sha256sum -c -; then \
-        echo "SHA256 mismatch for ${NODE_TARBALL}, try next major" && \
-        rm -f "${NODE_TARBALL}" "/tmp/${NODE_TARBALL}" && \
+        NODE_TARBALL_LOCAL_SHA256="$(sha256sum "/tmp/${NODE_TARBALL}" | awk '{print $1}')" && \
+        echo "SHA256 mismatch for major ${MAJOR} tarball ${NODE_TARBALL}" && \
+        echo "Expected SHA256: ${NODE_TARBALL_SHA256}" && \
+        echo "Actual   SHA256: ${NODE_TARBALL_LOCAL_SHA256}" && \
+        rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
       if ! tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1; then \
@@ -106,6 +114,10 @@ RUN set -xeuo pipefail && \
     fi && \
     JAVA_BIN_DIR="$(dirname "${JAVA_BIN}")" && \
     JAVA_HOME_GUESS="${JAVA_HOME:-$(dirname "${JAVA_BIN_DIR}")}" && \
+    if [ -z "${JAVA_HOME_GUESS}" ] || [ ! -d "${JAVA_HOME_GUESS}" ]; then \
+      echo "Invalid JAVA_HOME guess: ${JAVA_HOME_GUESS}" && \
+      exit 1; \
+    fi && \
     LIBJLI_PATH="$(find "${JAVA_HOME_GUESS}" -maxdepth 5 -name libjli.so 2>/dev/null | head -n 1 || true)" && \
     if [ -z "${LIBJLI_PATH}" ]; then \
       LIBJLI_PATH="$(find /usr/lib/jvm -maxdepth 6 -name libjli.so 2>/dev/null | head -n 1 || true)"; \

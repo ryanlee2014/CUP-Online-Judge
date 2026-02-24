@@ -46,6 +46,11 @@ Recommended pattern for a pinned release:
 
 The `KOTLIN_*_SHA256` arguments are optional. Set them when you need deterministic artifacts; otherwise build still follows latest compatible upstream releases.
 
+### When to pin versions
+- CI rollback / reproducible release: pin `*_REF` and both `KOTLIN_*_SHA256`.
+- Build failures introduced by upstream changes: pin `NODE_MAJOR`/`NODE_MAJOR_LIST`, `NODEJS_SHA256`, and git refs before rerunning.
+- Cross-region or air-gapped reproducibility: pin `KOTLIN_NATIVE_VERSION` and `KOTLIN_COMPILER_VERSION` explicitly to avoid transient metadata changes.
+
 ## Usage(all in one)
 ```bash
 ./init-env.sh

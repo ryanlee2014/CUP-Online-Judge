@@ -29,6 +29,7 @@ RUN set -xeuo pipefail && \
     cd ../ && \
     git clone --depth 1 --single-branch --branch "${DAEMON_REF}" "${DAEMON_REPO}" daemon && \
     cd daemon && \
+    cd /daemon && \
     NODE_BUILD_OK="false" && \
     for MAJOR in ${NODE_MAJOR_LIST}; do \
       echo "Trying Node.js ${MAJOR} LTS" && \
@@ -44,17 +45,20 @@ RUN set -xeuo pipefail && \
       NODE_VERSION="${NODE_VERSION%%-*}" && \
       echo "Resolved Node.js tarball ${NODE_TARBALL}" && \
       if ! curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}"; then \
-        echo "Failed to download Node.js ${NODE_TARBALL}, try next major" && \
+        echo "Failed to download Node.js ${NODE_TARBALL} for major ${MAJOR} from https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" && \
         rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
       if ! printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "${NODE_TARBALL}" | sha256sum -c -; then \
-        echo "SHA256 mismatch for ${NODE_TARBALL}, try next major" && \
+        NODE_TARBALL_LOCAL_SHA256="$(sha256sum "/tmp/${NODE_TARBALL}" | awk '{print $1}')" && \
+        echo "SHA256 mismatch for major ${MAJOR} tarball ${NODE_TARBALL}" && \
+        echo "Expected SHA256: ${NODE_TARBALL_SHA256}" && \
+        echo "Actual   SHA256: ${NODE_TARBALL_LOCAL_SHA256}" && \
         rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
       if ! tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1; then \
-        echo "Failed to extract Node.js archive for major ${MAJOR}, try next major" && \
+        echo "Failed to extract Node.js archive /tmp/${NODE_TARBALL} for major ${MAJOR}" && \
         rm -f "/tmp/${NODE_TARBALL}" && \
         continue; \
       fi && \
