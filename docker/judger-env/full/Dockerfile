@@ -13,16 +13,19 @@ LABEL maintainer="Ryan Lee" \
 RUN set -xeuo pipefail && \
     export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
-    apt-get install -y --no-install-recommends libncurses5 && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
         wget \
+        unzip \
         xz-utils \
-        unzip && \
+        libncurses5 && \
     if ! id -u judge >/dev/null 2>&1; then \
       if useradd -m -u "${JUDGE_UID}" judge 2>/dev/null; then :; else useradd -m judge; fi; \
     fi && \
-    judge_home="$(eval echo ~judge)" && \
+    judge_home="$(getent passwd judge | cut -d: -f6 || true)" && \
+    if [ -z "${judge_home}" ]; then \
+      judge_home="$(eval echo ~judge)" || true; \
+    fi && \
     if [ -z "${judge_home}" ] || [ "${judge_home}" = "/" ]; then \
       judge_home="/home/judge"; \
     fi && \
@@ -37,6 +40,10 @@ RUN set -xeuo pipefail && \
     rm -rf "/tmp/${KOTLIN_COMPILER_NAME}" && \
     cd ~ && \
     echo 'fun main(args: Array<String>) {println("Hello, World!")}' > hello.kt && \
+    if [ ! -x /usr/lib/kotlin-native/bin/kotlinc ]; then \
+      echo "Failed to locate kotlin-native compiler"; \
+      exit 1; \
+    fi && \
     /usr/lib/kotlin-native/bin/kotlinc hello.kt -o hello -opt && \
     mkdir -p "${judge_home}/.cache" && \
     chown -R judge:judge "${judge_home}" && \

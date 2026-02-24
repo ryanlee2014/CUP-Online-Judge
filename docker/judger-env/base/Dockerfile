@@ -14,7 +14,14 @@ LABEL maintainer="Ryan Lee" \
 RUN set -xeuo pipefail && \
     export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
-    apt-get install -y --no-install-recommends wget software-properties-common sudo ca-certificates gnupg curl xz-utils && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        gnupg \
+        software-properties-common \
+        sudo \
+        wget \
+        xz-utils && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${NODE_MAJOR}.x/SHASUMS256.txt" | awk -v major="${NODE_MAJOR}" '$2 ~ "^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" {print $1 " " $2; exit}')" && \
     NODE_TARBALL="${NODE_TARBALL_INFO#* }" && \
@@ -32,8 +39,22 @@ RUN set -xeuo pipefail && \
     printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "/tmp/${NODE_TARBALL}" | sha256sum -c - && \
     tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
     rm -f "/tmp/${NODE_TARBALL}" && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends cmake flex clang fp-compiler gcc g++ unzip zsh libgmp-dev libmysqlclient-dev build-essential git net-tools vim mono-devel openjdk-11-jdk && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        clang \
+        fp-compiler \
+        gcc \
+        g++ \
+        git \
+        libgmp-dev \
+        libmysqlclient-dev \
+        mono-devel \
+        net-tools \
+        openjdk-11-jdk \
+        unzip \
+        vim \
+        zsh && \
     add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
     apt-get update && \
     apt-get install -y --no-install-recommends gcc-10 g++-10 && \
@@ -61,9 +82,14 @@ RUN set -xeuo pipefail && \
       echo "Failed to locate libjli.so" && \
       exit 1; \
     fi && \
+    if [ ! -e "${LIBJLI_PATH}" ]; then \
+      echo "Invalid libjli path: ${LIBJLI_PATH}" && \
+      exit 1; \
+    fi && \
     dirname "${LIBJLI_PATH}" > /etc/ld.so.conf.d/libjvm.conf && \
     ldconfig && \
     cd ~ && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/usr/lib/kotlinc/bin:/usr/lib/kotlin-native/bin:${PATH}"
