@@ -31,6 +31,7 @@ Install [Docker](https://get.docker.com/) and [Docker Compose](https://docs.dock
 - `DAEMON_REF` (default: `master`)
 - `NODE_MAJOR` (default: `24 22 20`)
 - `NODE_MAJOR_LIST` (alias of `NODE_MAJOR`, retained for compatibility)
+- `NODE_MAJOR`/`NODE_MAJOR_LIST` are tried from left to right in build; the first Node major that can install and pass `npm run build:main -- --skipLibCheck` is used.
 - `KOTLIN_NATIVE_VERSION` / `KOTLIN_NATIVE_SHA256`
 - `KOTLIN_COMPILER_VERSION` / `KOTLIN_COMPILER_SHA256`
 

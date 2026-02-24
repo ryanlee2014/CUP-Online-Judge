@@ -47,6 +47,7 @@ If you want deterministic CI output, pin upstream checkouts and checksums explic
 - `--build-arg DAEMON_REF=<commit_sha>`
 - `--build-arg NODE_MAJOR=<major_version>`
 - `--build-arg NODE_MAJOR_LIST=<major list>` (defaults to `NODE_MAJOR`, kept for compatibility)
+- `NODE_MAJOR`/`NODE_MAJOR_LIST` is attempted left-to-right; the first major version that can successfully install and complete `npm run build:main -- --skipLibCheck` is used.
 - `--build-arg KOTLIN_NATIVE_SHA256=<sha256>`
 - `--build-arg KOTLIN_COMPILER_SHA256=<sha256>`
 

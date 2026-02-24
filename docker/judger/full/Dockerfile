@@ -27,30 +27,38 @@ RUN set -xeuo pipefail && \
     cd ../ && \
     git clone --depth 1 --single-branch --branch "${DAEMON_REF}" "${DAEMON_REPO}" daemon && \
     cd daemon && \
-    NODE_TARBALL_INFO="" && \
+    NODE_BUILD_OK="false" && \
     for MAJOR in ${NODE_MAJOR_LIST}; do \
-    NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${MAJOR}.x/SHASUMS256.txt" | awk -v major="${MAJOR}" '$2 ~ "^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" { print $1 " " $2; exit }' || true)" && \
-        if [ -n "${NODE_TARBALL_INFO}" ]; then \
-            break; \
-        fi; \
+      echo "Trying Node.js ${MAJOR} LTS" && \
+      NODE_TARBALL_INFO="$(curl -fsSL "https://nodejs.org/dist/latest-v${MAJOR}.x/SHASUMS256.txt" | awk -v major="${MAJOR}" '$2 ~ "^node-v" major "\\.[0-9]+\\.[0-9]+-linux-x64\\.tar\\.xz$" { print $1 " " $2; exit }' || true)" && \
+      if [ -z "${NODE_TARBALL_INFO}" ]; then \
+        echo "No tarball found for Node.js major ${MAJOR}, skip." && \
+        continue; \
+      fi && \
+      NODE_TARBALL="${NODE_TARBALL_INFO#* }" && \
+      NODE_TARBALL_SHA256="${NODE_TARBALL_INFO%% *}" && \
+      NODE_VERSION="${NODE_TARBALL#node-}" && \
+      NODE_VERSION="${NODE_VERSION%%-*}" && \
+      echo "Resolved Node.js tarball ${NODE_TARBALL}" && \
+      curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}" && \
+      printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "${NODE_TARBALL}" | sha256sum -c - && \
+      tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
+      rm -f "/tmp/${NODE_TARBALL}" && \
+      npm config set --location=global legacy-peer-deps true && \
+      rm -rf node_modules && \
+      npm install --legacy-peer-deps --unsafe-perm && \
+      cp ../judger/wsjudged ./ && \
+      chmod +x wsjudged && \
+      if npm run build:main -- --skipLibCheck; then \
+        NODE_BUILD_OK="true"; \
+        break; \
+      fi && \
+      echo "Node.js ${NODE_VERSION} failed to build daemon service. Try next major."; \
     done && \
-    NODE_TARBALL="${NODE_TARBALL_INFO#* }" && \
-    NODE_TARBALL_SHA256="${NODE_TARBALL_INFO%% *}" && \
-    if [ -z "${NODE_TARBALL}" ] || [ -z "${NODE_TARBALL_SHA256}" ]; then \
-        echo "Failed to resolve a supported Node.js LTS tarball" && \
-        exit 1; \
-    fi && \
-    NODE_VERSION="${NODE_TARBALL#node-}" && \
-    NODE_VERSION="${NODE_VERSION%%-*}" && \
-    curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TARBALL}" -o "/tmp/${NODE_TARBALL}" && \
-    printf "%s  /tmp/%s\n" "${NODE_TARBALL_SHA256}" "${NODE_TARBALL}" | sha256sum -c - && \
-    tar -xJf "/tmp/${NODE_TARBALL}" -C /usr/local --strip-components=1 && \
-    rm -f "/tmp/${NODE_TARBALL}" && \
-    npm config set --location=global legacy-peer-deps true && \
-    npm install --legacy-peer-deps --unsafe-perm && \
-    cp ../judger/wsjudged ./ && \
-    chmod +x wsjudged && \
-    npm run build:main -- --skipLibCheck
+    if [ "${NODE_BUILD_OK}" != "true" ]; then \
+      echo "Failed to build Judge-Daemon-Service with all Node.js majors in NODE_MAJOR_LIST=${NODE_MAJOR_LIST}"; \
+      exit 1; \
+    fi
 
 
 # Binds to port 8080
