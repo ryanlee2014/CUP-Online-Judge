@@ -58,7 +58,18 @@ RUN set -xeuo pipefail && \
       rm -f "/tmp/${NODE_TARBALL}" && \
       npm config set --location=global legacy-peer-deps true && \
       rm -rf node_modules && \
-      cp ../judger/wsjudged ./ && \
+      if [ -x ../judger/wsjudged ]; then \
+        cp ../judger/wsjudged ./; \
+      else \
+        echo "Expected executable not found at ../judger/wsjudged, probing build outputs..." && \
+        WS_JUDGED="$(find ../judger -maxdepth 3 -type f -name wsjudged -executable 2>/dev/null | head -n 1 || true)" && \
+        if [ -z "${WS_JUDGED}" ]; then \
+          echo "Failed to locate wsjudged under ../judger" && \
+          find ../judger -maxdepth 3 -type f \( -name 'wsjudged' -o -name 'wsjudged-*' \) 2>/dev/null || true && \
+          exit 1; \
+        fi && \
+        cp "${WS_JUDGED}" ./wsjudged; \
+      fi && \
       chmod +x wsjudged && \
       if npm install --legacy-peer-deps --unsafe-perm; then \
         if npm run build:main -- --skipLibCheck; then \
